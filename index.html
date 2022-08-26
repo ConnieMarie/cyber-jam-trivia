@@ -1,33 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script
+      src="https://kit.fontawesome.com/ac88cc62aa.js"
+      crossorigin="anonymous"
+    ></script>
     <title>Document</title>
-    
-</head>
-<header>
-    <div class="Jumbotron">Music History Trivia</div>
-    <button>High Scores</button>
-</header>
-<body>
-    <main>
-        <div>
-            <div class="container">
-                <div class="content">
-                    <p>Intro Paragragh</p>
-                    <button>Start</button>
-                </div>
+  </head>
+  <body>
+    <section class="hero is-primary is-small">
+      <!-- bulma hero -->
+      <!-- Hero head: will stick at the top -->
+      <!-- https://bulma.io/documentation/layout/hero/ -->
+      <div class="hero-head">
+        <nav class="navbar">
+          <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+              <!-- navbar items, navbar burger... -->
             </div>
+            <div class="navbar-menu">
+              <!-- navbar start, navbar end -->
+            </div>
+          </nav>
+          <div class="container">
+            <!-- navbar-title -->
+            <div class="navbar-brand">
+              <a class="navbar-item" href="index.html">
+                <!-- bulma title -->
+                <!-- https://bulma.io/documentation/elements/title/ -->
+                <h1 class="title">Music History Trivia</h1>
+              </a>
+              <span class="navbar-burger" data-target="navbarMenuHeroA">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </div>
+
+            <div id="navbarMenuHeroA" class="navbar-menu">
+              <div class="navbar-end">
+                <span class="navbar-item">
+                  <a class="button is-primary is-inverted">
+                    <span class="icon">
+                      <i class="fa-solid fa-crown"></i>
+                    </span>
+                    <span>High Score</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </section>
+    <header>
+      <div class="jumbotron">Music History Trivia</div>
+      <button>High Scores</button>
+    </header>
+    <main>
+      <div>
+        <div class="container">
+          <div class="content">
+            <p>Intro Paragragh</p>
+            <button>Start</button>
+          </div>
         </div>
-        <footer>Made by Team Awesome</footer>
+      </div>
+      <footer>Made by Team Awesome</footer>
     </main>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="./assets/js/script.js"></script>
-</body>
+  </body>
 </html>
