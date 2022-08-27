@@ -38,15 +38,24 @@
             <label class="label is-size-3">API URL</label>
             <div class="control has-icons-left">
               <input
+                id="apiUrlInput"
                 class="input is-medium is-info"
                 type="text"
-                placeholder="Text input"
+                placeholder="Enter API URL"
               />
               <span class="icon is-small is-left">
                 <i class="fa-solid fa-network-wired"></i>
               </span>
             </div>
             <p class="help">Enter the API and click submit to see the output</p>
+            <div class="inputBtnGroup buttons has-addons is-right">
+              <button id="submitBtn" class="button is-info is-outlined">
+                Submit
+              </button>
+              <button id="clearBtn" class="button is-info is-outlined">
+                Clear
+              </button>
+            </div>
           </div>
         </div>
         <div class="column is-1"></div>
@@ -56,7 +65,7 @@
       <div class="columns is-mobile py-5">
         <div class="column is-1"></div>
         <div class="column is-10">
-          <div class="is-size-3 has-text-weight-bold pb-4">API Results</div>
+          <div class="is-size-3 has-text-weight-bold pb-4">API RESULTS</div>
           <!-- <blockquote class="is-info"></blockquote> -->
           <div class="tile is-ancestor">
             <div class="tile notification is-info mx-3">
@@ -67,6 +76,8 @@
         <div class="column is-1"></div>
       </div>
     </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="./assets/js/sandbox-gabe.js"></script>
   </body>
 </html>
