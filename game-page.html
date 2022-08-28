@@ -1,32 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css"/>
-    <title>Document</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/ac88cc62aa.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="game-page" href="game-page.html"/>
+    <link rel="high-score-page" href="high-score.html"/> 
+    <title>Game-Page</title>
+  </head>
 <body>
+    <!-- HEADER -->
+    <!-- bulma hero -->
+    <!-- Hero head: will stick at the top -->
+    <!-- https://bulma.io/documentation/layout/hero/ -->
     <header>
-        <div class="Jumbotron">Music History Trivia</div>
-        <button>High Scores</button>
-    </header>
-    <main>
-        <div>
-            <div class="container">
-                <div class="content">
-                    <div class="question col">Game Question</div>
-                    <button class="btn answer-btn col">Answer</button>
-                    <button class="btn answer-btn col">Answer</button>
-                    <button class="btn answer-btn col">Answer</button>
-                    <button class="btn answer-btn col">Answer</button>
+        <section class="hero is-primary is-medium">
+          <!-- Hero head: will stick at the top -->
+          <div class="hero-head">
+            <nav class="navbar">
+              <div class="container">
+                <div class="navbar-brand">
+                  <a class="navbar-item" href="index.html">
+                    <h1 class="title is-2">Music History Trivia</h1>
+                  </a>
+                  <span class="navbar-burger" data-target="navbarMenuHeroA">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </span>
+                </div>
+                <div id="navbarMenuHeroA" class="navbar-menu">
+                  <div class="navbar-end">
+                    <span class="navbar-item">
+                      <a class="button is-primary is-inverted">
+                        <span class="icon">
+                          <i class="fa-solid fa-crown"></i>
+                        </span>
+                        <span>High Scores</span>
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </section>
+      </header>
+    <main class="section is-medium">
+        <div class="columns">
+            <div class="column is-1"></div>
+            <div class="column has-text-centered is-10">
+                <div class="columns">
+                    <div class="column is-8">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet impedit iusto error laboriosam dignissimos officiis qui molestiae, voluptatum accusamus placeat repellat temporibus vitae ipsum quibusdam corporis unde cupiditate eligendi auto.
+                    </div>
+                    <div class="column is-4">
+                        <button class="button my-5 is-primary is-medium is-fullwidth has-text-weight-bold">Button1</button>
+                        <button class="button my-5 is-primary is-medium is-fullwidth has-text-weight-bold">Button1</button>
+                        <button class="button my-5 is-primary is-medium is-fullwidth has-text-weight-bold">Button1</button>
+                        <button class="button my-5 is-primary is-medium is-fullwidth has-text-weight-bold">Button1</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <footer>Made With 🤘 by Team Awesome</footer>
     </main>
+    <footer class="footer is-bottom">
+       <p class="is-italic title is-4 has-text-right"> Made by Team <strong>Awesome</strong></p>
+    </footer>
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -34,3 +83,9 @@
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
+
+                    <!-- <div class="question col">Game Question</div>
+                    <button class="btn answer-btn col">Answer</button>
+                    <button class="btn answer-btn col">Answer</button>
+                    <button class="btn answer-btn col">Answer</button>
+                    <button class="btn answer-btn col">Answer</button> -->
