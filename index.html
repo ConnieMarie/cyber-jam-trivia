@@ -1,43 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/ac88cc62aa.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <!-- bulma hero -->
+    <!-- Hero head: will stick at the top -->
+    <!-- https://bulma.io/documentation/layout/hero/ -->
     <header>
-        <section class="hero">
-            <div class="hero-body">
-                <p class="title has-text-centered">
-                    Music History Trivia
-                </p>
-                <p class="subtitle has-text-centered">
-                    Test Your Knowledge!
-                </p>
-                <button class="button" rel="high-scores" href="./high-score.html">High Scores</button>
+      <section class="hero is-primary is-medium">
+        <!-- Hero head: will stick at the top -->
+        <div class="hero-head">
+          <nav class="navbar">
+            <div class="container">
+              <div class="navbar-brand">
+                <a class="navbar-item" href="index.html">
+                  <h1 class="title is-2">Music History Trivia</h1>
+                </a>
+                <span class="navbar-burger" data-target="navbarMenuHeroA">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </div>
+              <div id="navbarMenuHeroA" class="navbar-menu">
+                <div class="navbar-end">
+                  <span class="navbar-item">
+                    <a class="button is-primary is-inverted">
+                      <span class="icon">
+                        <i class="fa-solid fa-crown"></i>
+                      </span>
+                      <span>Download</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
             </div>
-        </section>  
-    </header>
-    <main>
-        <div class="container">
-            <section class="section is-medium has-text-centered">
-                <h1 class="title">Intro Paragragh</h1>
-                    <p class="">Something describing what our page is about and what inspired us to build it. blah blah blah blahblah blahblah
-                        blahblah blahblah blahblah blahblah blahblah blahblah blahblah blahblah blahblah blahblah blahblah blahblah blah</p>
-                    <button class="button" rel="game-page" href="./game-page.html">Start</button>
-            </section>
+          </nav>
         </div>
-        <footer class="footer background-color-is-primary">
-            <div class="content">Made with 🤘 by Team Awesome</div>
-        </footer>
+      </section>
+    </header>
+    <!-- END HEADER -->
+
+    <!--  -->
+    <main class="section is-medium">
+      <div class="container">
+        <div class="content">
+          <h1 class="subtitle has-text-centered">
+            Test your Music and History Knowledge
+          </h1>
+          <p class="">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid,
+            itaque neque voluptatem, consectetur deleniti molestias saepe quae
+            laudantium dolorum, quibusdam ipsam iste. Ratione accusamus dolore
+            ex placeat suscipit atque voluptatum ab, aut quam delectus expedita
+            eum quasi minus rerum earum optio? Omnis debitis provident tempora
+            magnam deserunt magni nulla facere?
+          </p>
+          <div class="has-text-centered">
+            <button class="button is-primary is-large px-6">Start</button>
+          </div>
+        </div>
+      </div>
     </main>
+    <footer class="footer is-italic title is-4 has-text-right">
+      Made by Team <strong>Awesome</strong>
+    </footer>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="./assets/js/script.js"></script>
-</body>
+  </body>
 </html>
