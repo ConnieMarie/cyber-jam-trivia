@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/ac88cc62aa.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Fetch API Tester</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/sandbox-gabe.css" />
+  </head>
+  <body>
+    <section class="hero is-small is-info py-5 px-5">
+      <div class="hero-body pb-0">
+        <div class="columns is-mobile mb-0">
+          <div class="column is-1"></div>
+          <div class="column is-10">
+            <header class="title">Fetch API Tester</header>
+            <p class="subtitle">
+              A quick and easy solution to testing API output
+            </p>
+          </div>
+        </div>
+        <div class="column is-1"></div>
+      </div>
+    </section>
+    <section>
+      <div class="columns is-mobile py-5">
+        <div class="column is-1"></div>
+        <div class="column is-10">
+          <div class="field">
+            <label class="label is-size-3">API URL</label>
+            <div class="control has-icons-left">
+              <input
+                id="apiUrlInput"
+                class="input is-medium is-info"
+                type="text"
+                placeholder="Enter API URL"
+              />
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-network-wired"></i>
+              </span>
+            </div>
+            <p class="help">Enter the API and click submit to see the output</p>
+            <div class="inputBtnGroup buttons has-addons is-right">
+              <button id="submitBtn" class="button is-info is-outlined">
+                Submit
+              </button>
+              <button id="clearBtn" class="button is-info is-outlined">
+                Clear
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="column is-1"></div>
+      </div>
+    </section>
+    <section class="content">
+      <div class="columns is-mobile py-5">
+        <div class="column is-1"></div>
+        <div class="column is-10">
+          <div class="is-size-3 has-text-weight-bold pb-4">API RESULTS</div>
+          <!-- <blockquote class="is-info"></blockquote> -->
+          <div class="tile is-ancestor">
+            <div class="tile notification is-info mx-3">
+              <p>This is the results of the API</p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-1"></div>
+      </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="./assets/js/sandbox-gabe.js"></script>
+  </body>
+</html>
