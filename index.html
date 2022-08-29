@@ -1,32 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css"/>
-    <title>Document</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
+    /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/ac88cc62aa.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Music History Trivia</title>
+  </head>
+  <body class="homepage">
+    <!-- HEADER -->
+    <!-- bulma hero -->
+    <!-- Hero head: will stick at the top -->
+    <!-- https://bulma.io/documentation/layout/hero/ -->
     <header>
-        <div class="Jumbotron">Music History Trivia</div>
-        <button>High Scores</button>
-    </header>
-    <main>
-        <div>
+      <section class="hero is-primary is-medium">
+        <!-- Hero head: will stick at the top -->
+        <div class="hero-head">
+          <nav class="navbar">
             <div class="container">
-                <div class="content">
-                    <p>Intro Paragragh</p>
-                    <button>Start</button>
+              <div class="navbar-brand">
+                <a class="navbar-item" href="index.html">
+                  <h1 class="title is-2">Music History Trivia</h1>
+                </a>
+                <span class="navbar-burger" data-target="navbarMenuHeroA">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </div>
+              <div id="navbarMenuHeroA" class="navbar-menu">
+                <div class="navbar-end">
+                  <span class="navbar-item">
+                    <a
+                      class="button is-primary is-inverted"
+                      href="high-score.html"
+                    >
+                      <span class="icon">
+                        <i class="fa-solid fa-crown"></i>
+                      </span>
+                      <span>High Score</span>
+                    </a>
+                  </span>
                 </div>
+              </div>
             </div>
+          </nav>
         </div>
-        <footer>Made by Team Awesome</footer>
+      </section>
+    </header>
+    <!-- END HEADER -->
+
+    <!--  -->
+    <main class="section is-medium px-0">
+      <div class="columns">
+        <!-- Left panel -->
+        <div class="column is-3">
+          <!-- <form action="#">
+            <fieldset>
+              <div class="is-size-4 has-text-weight-bold px-4 pb-1">
+                Pick your trivia:
+              </div>
+
+              <div class="px-4">
+                <select
+                  name="speed"
+                  id="jquery-dropdown"
+                  class="button is-primary is-size-4 is-outlined is-fullwidth"
+                >
+                  <option class="is-size-4">Music</option>
+                  <option class="is-size-4">History</option>
+                  <option class="is-size-4">Medium</option>
+                  <option class="is-size-4">Fast</option>
+                  <option class="is-size-4">Faster</option>
+                </select>
+              </div>
+            </fieldset>
+          </form> -->
+
+          <div class="dropdown ml-4">
+            <div class="dropdown-trigger">
+              <button
+                class="button is-primary is-fullwidth"
+                aria-haspopup="true"
+                aria-controls="dropdown-menu"
+              >
+                <span id="dropdownText" class="is-size-4 px-4 pb-1"
+                  >Trivia Topic</span
+                >
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <a
+                  class="dropdown-item is-primary is-size-4 is-fullwidth"
+                  data-catId="12"
+                  >Music</a
+                >
+                <a
+                  class="dropdown-item is-primary is-size-4 is-fullwidth"
+                  data-catId="23"
+                  >History</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Left Panel -->
+        <div class="container is-8">
+          <div class="content">
+            <h1 class="subtitle has-text-centered">
+              Test your Music and History Knowledge
+            </h1>
+            <p class="testarea">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid,
+              itaque neque voluptatem, consectetur deleniti molestias saepe quae
+              laudantium dolorum, quibusdam ipsam iste. Ratione accusamus dolore
+              ex placeat suscipit atque voluptatum ab, aut quam delectus
+              expedita eum quasi minus rerum earum optio? Omnis debitis
+              provident tempora magnam deserunt magni nulla facere?
+            </p>
+            <div class="has-text-centered">
+              <a
+                id="playButton"
+                class="button is-primary is-large px-6"
+                href="#"
+                >Play</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="column is-1"></div>
+      </div>
     </main>
+    <footer class="footer is-italic title is-4 has-text-right has-text-white">
+      Made by Team <strong>Awesome</strong>
+    </footer>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="./assets/js/script.js"></script>
-</body>
+  </body>
 </html>
