@@ -1,35 +1,33 @@
-// var apiKey = "+UAPOEz8eS3RqXRJjvFjxA==jfNUZHAlHVThyjIt";
+var dropdown = document.querySelector(".dropdown");
+dropdown.addEventListener("click", function (event) {
+  event.stopPropagation();
+  dropdown.classList.toggle("is-active");
+});
 
-// var category = "music";
-// $.ajax({
-//   method: "GET",
-//   url: "https://api.api-ninjas.com/v1/trivia?category=" + category,
-//   headers: { "X-Api-Key": apiKey },
-//   contentType: "application/json",
-//   success: function (result) {
-//     console.log(result);
-//   },
-//   error: function ajaxError(jqXHR) {
-//     console.error("Error: ", jqXHR.responseText);
-//   },
+// var dropdownItem = document.querySelector(".dropdown-item");
+// dropdownItem.addEventListener("mouseover", function (event) {
+//   event.stopPropagation();
+//   dropdownItem.classList.toggle("is-active");
 // });
 
-var buttonContainer = document.querySelector("#choiceButtons");
+// $(function () {
+//   $("#jquery-dropdown").selectmenu();
+//   console.log($("#jquery-dropdown").selectmenu().val);
+// });
 
-var choiceButtonHandler = function (event) {
-  console.log("button was clicked");
-  //   event.preventDefault();
-  // get value from input element
-  var choiceSelected = event.target.getAttribute("value");
+$(".dropdown-content").click(function (event) {
+  var topic = event.target.innerText;
+  console.log(topic);
 
-  console.log(choiceSelected);
+  // var apiUrl = $("#apiUrlInput").val();
+  //   console.log(apiUrl);
 
-  //   if (username) {
-  //     getUserRepos(username);
-  //     nameInputEl.value = "";
-  //   } else {
-  //     alert("Please enter a GitHub username");
-  //   }
-};
+  // if (apiUrl) {
+  //   console.log("API Url has a value");
 
-buttonContainer.addEventListener("click", choiceButtonHandler);
+  //   $(".dropdown-content #submitBtn").last().addClass("is-loading");
+  // createTask(taskText, taskDate, "toDo");
+
+  // fetchURLdata(apiUrl);
+  // }
+});
