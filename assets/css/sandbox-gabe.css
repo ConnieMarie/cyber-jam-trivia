@@ -1,0 +1,20 @@
+.content blockquote.is-primary {
+  background-color: #d2fff8;
+  border-color: #0effdb;
+}
+.content blockquote.is-info {
+  background-color: #e0eafa;
+  border-color: #5b8fe3;
+}
+.content blockquote.is-success {
+  background-color: #ddf9e7;
+  border-color: #4ae07e;
+}
+.content blockquote.is-warning {
+  background-color: #fffae6;
+  border-color: #ffe478;
+}
+.content blockquote.is-danger {
+  background-color: #ffe1e7;
+  border-color: #ff6080;
+}
