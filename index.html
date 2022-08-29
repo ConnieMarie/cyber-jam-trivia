@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
+      href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
+    />
+    <link
+      rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
     />
     <script
@@ -13,9 +17,7 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <link rel="game-page" href="game-page.html"/>
-    <link rel="high-score-page" href="high-score.html"/> 
-    <title>Homepage</title>
+    <title>Music History Trivia</title>
   </head>
   <body>
     <!-- HEADER -->
@@ -41,7 +43,10 @@
               <div id="navbarMenuHeroA" class="navbar-menu">
                 <div class="navbar-end">
                   <span class="navbar-item">
-                    <a class="button is-primary is-inverted">
+                    <a
+                      class="button is-primary is-inverted"
+                      href="high-score.html"
+                    >
                       <span class="icon">
                         <i class="fa-solid fa-crown"></i>
                       </span>
@@ -58,24 +63,75 @@
     <!-- END HEADER -->
 
     <!--  -->
-    <main class="section is-medium">
-      <div class="container">
-        <div class="content">
-          <h1 class="subtitle has-text-centered">
-            Test your Music and History Knowledge
-          </h1>
-          <p class="">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid,
-            itaque neque voluptatem, consectetur deleniti molestias saepe quae
-            laudantium dolorum, quibusdam ipsam iste. Ratione accusamus dolore
-            ex placeat suscipit atque voluptatum ab, aut quam delectus expedita
-            eum quasi minus rerum earum optio? Omnis debitis provident tempora
-            magnam deserunt magni nulla facere?
-          </p>
-          <div class="has-text-centered">
-            <a href="game-page.html" class="button is-primary is-large px-6">Play</a>
+    <main class="section is-medium px-0">
+      <div class="columns">
+        <!-- Left panel -->
+        <div class="column is-3">
+          <!-- <form action="#">
+            <fieldset>
+              <div class="is-size-4 has-text-weight-bold px-4 pb-1">
+                Pick your trivia:
+              </div>
+
+              <div class="px-4">
+                <select
+                  name="speed"
+                  id="jquery-dropdown"
+                  class="button is-primary is-size-4 is-outlined is-fullwidth"
+                >
+                  <option class="is-size-4">Music</option>
+                  <option class="is-size-4">History</option>
+                  <option class="is-size-4">Medium</option>
+                  <option class="is-size-4">Fast</option>
+                  <option class="is-size-4">Faster</option>
+                </select>
+              </div>
+            </fieldset>
+          </form> -->
+
+          <div class="dropdown ml-4">
+            <div class="dropdown-trigger">
+              <button
+                class="button is-primary is-outlined"
+                aria-haspopup="true"
+                aria-controls="dropdown-menu"
+              >
+                <span>Trivia Topic</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <a class="dropdown-item">Music</a>
+                <a class="dropdown-item">History</a>
+              </div>
+            </div>
           </div>
         </div>
+        <!-- End Left Panel -->
+        <div class="container is-8">
+          <div class="content">
+            <h1 class="subtitle has-text-centered">
+              Test your Music and History Knowledge
+            </h1>
+            <p class="testarea">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid,
+              itaque neque voluptatem, consectetur deleniti molestias saepe quae
+              laudantium dolorum, quibusdam ipsam iste. Ratione accusamus dolore
+              ex placeat suscipit atque voluptatum ab, aut quam delectus
+              expedita eum quasi minus rerum earum optio? Omnis debitis
+              provident tempora magnam deserunt magni nulla facere?
+            </p>
+            <div class="has-text-centered">
+              <a class="button is-primary is-large px-6" href="game-page.html"
+                >Play</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="column is-1"></div>
       </div>
     </main>
     <footer class="footer is-italic title is-4 has-text-right has-text-white">
