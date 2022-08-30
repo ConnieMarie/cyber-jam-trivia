@@ -29,7 +29,7 @@ if ($("body").hasClass("homepage")) {
   $(".dropdown-content").click(function (event) {
     var topic = event.target.innerText;
     console.log(topic);
-    console.log(gameCategoryList[0].name);
+
     //stores the data-catId from the dropdown to add to the API search
     gameCategoryId = $(event.target).attr("data-catId");
     console.log(gameCategoryId);
@@ -82,7 +82,7 @@ if ($("body").hasClass("gamePage")) {
 }
 
 var getQuestion = function () {
-  gameCategoryId = 23;
+  // gameCategoryId = 23;
 
   if (gameQuestionCount >= gameQuestionCountLimit) {
     endGame();
@@ -116,9 +116,17 @@ var getQuestion = function () {
 
 function displayQuestion(question) {
   console.log(question);
+
+  //
+  // $("#gameArea").html(
+  //   "<div class='columns'><div class='column is-8'></div><div id='choiceButtons' class='column is-4'></div></div>"
+  // );
+
   // First clear old elements and questions
+  // containder is #choiceButtons
 
   // Add elements with new questions while adding the data attribute to the button elements
+
   // Add question count number to question header
 }
 
