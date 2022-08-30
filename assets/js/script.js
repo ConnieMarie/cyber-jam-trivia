@@ -1,6 +1,6 @@
 var questionData; //need global for click event
 var score = 0;
-var gameQuestionCountLimit = 10;
+var gameQuestionCountLimit = 3;
 var gameQuestionCount = 0;
 var gameCategoryId = "";
 var giphyApiKey = "IqouWAvchaDj6oy5b7niRntKCW50BpKB";
@@ -80,38 +80,6 @@ if ($("body").hasClass("triviaPage")) {
       //if category variable is empty (user directly access game page bypassing category question), redirects to the home page to have user select the trivia category
       document.location.href = "index.html";
     }
-  });
-
-  $("#gameArea").on("click", ".choiceButton", function () {
-    var chosenAnswer = $(this).text();
-    console.log(chosenAnswer);
-    console.log(questionData.answer);
-    if (chosenAnswer == questionData.answer) {
-      console.log("Correct");
-      score++;
-      //provide user response
-    } else {
-      console.log("Incorrect");
-      //provide user response
-    }
-
-    // !!!!! still need to disable the answer buttons to prevent multiple clicks until next button is clicked
-
-    // add next question button or finish button if last question
-    //click event will look for .nextQuestion class and call getQuestion();
-    if (gameQuestionCount >= gameQuestionCountLimit) {
-      $("#questionBody").append(
-        "<div class='has-text-centered mt-6'><button class='button is-primary is-large px-6' id='nextQuestion'>Finish</button></div>"
-      );
-    } else {
-      $("#questionBody").append(
-        "<div class='has-text-centered mt-6'><button class='button is-primary is-large px-6' id='nextQuestion'>Next</button></div>"
-      );
-    }
-  });
-
-  $("#gameArea").on("click", "#nextQuestion", function () {
-    getQuestion();
   });
 }
 
@@ -233,16 +201,58 @@ function displayQuestion(triviaData) {
   $("#questionArea")
     .html(
       "<article class='message is-primary my-5'><div class='message-header'><p id='questionTitle' class='title is-4 has-text-white'>Question " +
-        (gameQuestionCount + 1) +
+        gameQuestionCount +
         "</p></div><div id='questionBody' class='message-body is-size-4 has-text-left'>" +
         triviaData.question +
         "</div></article>"
     )
-    .effect("slide", { direction: "right" }, 400, function () {
+    .effect("slide", { direction: "left" }, 400, function () {
       $("#choiceButtons")
         .html(choiceButtonEl)
         .effect("slide", { direction: "right" }, 800);
     });
+
+  $("#gameArea").on("click", ".choiceButton", function () {
+    $("#gameArea").off("click", ".choiceButton");
+    var chosenAnswer = $(this).text();
+    console.log(chosenAnswer);
+    console.log(questionData.answer);
+    if (chosenAnswer == questionData.answer) {
+      console.log("Correct");
+      score++;
+      $(this).removeClass("is-primary");
+      $(this).addClass("is-success");
+      //provide user response
+    } else {
+      console.log("Incorrect");
+      $(this).removeClass("is-primary");
+      $(this).addClass("is-danger");
+      //provide user response
+    }
+
+    // !!!!! still need to disable the answer buttons to prevent multiple clicks until next button is clicked
+
+    // add next question button or finish button if last question
+    //click event will look for .nextQuestion class and call getQuestion();
+    if (gameQuestionCount >= gameQuestionCountLimit) {
+      var nextButtonText = "Finish";
+    } else {
+      var nextButtonText = "Next";
+    }
+
+    $("#questionBody").append(
+      "<div class='has-text-centered mt-6'><button class='button is-primary is-large px-6' id='nextQuestion'>" +
+        nextButtonText +
+        "</button></div>"
+    );
+
+    $("#gameArea").on("click", "#nextQuestion", function () {
+      $("#gameArea").off("click", "#nextQuestion");
+      getQuestion();
+    });
+  });
 }
+
+function endGame() {}
 
 // getQuestion();
