@@ -2,4 +2,8 @@
   /* background-color: hsl(171, 100%, 96%); */
   background-color: hsl(171, 100%, 41%);
   /* background-color: #00d1b2; */
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
+
