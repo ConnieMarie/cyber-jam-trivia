@@ -141,7 +141,7 @@
                   porttitor mi magna a neque.
                 </div>
                 <div class="has-text-centered">
-                    <a class="button is-primary is-large px-6" href="game-page.html"
+                    <a class="button is-primary is-large px-6 js-modal-trigger" data-target="modal-js-example" href="game-page.html"
                       >Play</a
                     >
                   </div>
@@ -176,6 +176,24 @@
     <footer class="footer m-0 p-5 is-fullwidth is-italic title is-4 has-text-right has-text-white">
       Made by Team <strong>Awesome</strong>
     </footer>
+
+   
+    <div id="modal-select-topic" class="modal">
+      <div class="modal-background"></div>
+    
+      <div class="modal-content">
+        <div class="box">
+          <p>You must select a topic!</p>
+          <!-- Your content -->
+        </div>
+      </div>
+    
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+    <button class="js-modal-trigger" data-target="modal-js-example">
+    </button>
+    
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
