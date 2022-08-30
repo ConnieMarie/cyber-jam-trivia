@@ -2,6 +2,9 @@ var score = 0;
 var gameQuestionCountLimit = 10;
 var gameQuestionCount = 0;
 var gameCategoryId = "";
+var giphyApiKey = "IqouWAvchaDj6oy5b7niRntKCW50BpKB"
+var giphyApiUrl = "http://api.giphy.com/v1/gifs/search?q=happy+<searchTerm>&api_key=<giphyApiKey>&limit=1&offset=<randomNum>"
+var giphyRandomLimit = 5000
 var apiUrl =
   "https://opentdb.com/api.php?amount=1&category=<catId>&type=multiple";
 
@@ -96,8 +99,8 @@ var getQuestion = function () {
           response.json().then(function (data) {
             // bulma loading icon class
             // $(":button").toggleClass("is-loading");
-            // console.log(data);
-            displayQuestion(data);
+            console.log(data);
+         displayQuestion(data);
           });
         } else {
           // bulma loading icon class
@@ -122,4 +125,32 @@ function displayQuestion(question) {
   // Add question count number to question header
 }
 
-getQuestion();
+var giphyImg = function(searchTerm) {
+
+    var giphyFetchUrl = giphyApiUrl.replace("<searchTerm>", searchTerm);
+    giphyFetchUrl = giphyFetchUrl.replace("<giphyApiKey>", giphyApiKey);
+    giphyFetchUrl = giphyFetchUrl.replace("<randomNum>", (Math.floor(Math.random() * giphyRandomLimit)))
+    console.log(giphyFetchUrl);
+
+    // make a request to the url
+    fetch(giphyFetchUrl)
+      .then(function (response) {
+        // request was successful
+        if (response.ok) {
+          response.json().then(function (data) {
+            console.log(data.data[0].images.downsized.url);
+            //return data;
+            //displayQuestion(data);
+          });
+        } else {
+          alert("Giphy API Error: Unable to retreive a GIF");
+        }
+      })
+      .catch(function (error) {
+        // Notice this `.catch()` getting chained onto the end of the `.then()` method
+        alert("Giphy API Error: Unable to connect to giphy database");
+      });
+}
+
+//giphyImg("history");
+//getQuestion();
