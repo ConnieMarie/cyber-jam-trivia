@@ -141,7 +141,7 @@
                   porttitor mi magna a neque.
                 </div>
                 <div class="has-text-centered">
-                    <a class="button is-primary is-large px-6 js-modal-trigger" data-target="modal-js-example" href="game-page.html"
+                    <a class="button is-primary is-large px-6 button is-success" onclick="openModal();" href="game-page.html"
                       >Play</a
                     >
                   </div>
@@ -178,21 +178,37 @@
     </footer>
 
    
-    <div id="modal-select-topic" class="modal">
+    <div class="modal" id="modal-select-topic">
       <div class="modal-background"></div>
-    
-      <div class="modal-content">
-        <div class="box">
-          <p>You must select a topic!</p>
-          <!-- Your content -->
-        </div>
+      <div class="modal-card">
+          <header class="modal-card-head">
+              <p class="modal-card-title">
+                  In Order To Play...
+              </p>
+   
+   
+   
+              <button class="delete"
+                  aria-label="close">
+              </button>
+          </header>
+          <section class="modal-card-body">
+              <h1></h1>
+               
+   
+  <p>
+                  Please select a topic! You can't answer questions about nothing!
+              </p>
+   
+   
+          </section>
+          <footer class="modal-card-foot">
+              <button class="button is-primary">
+                  Got it!
+              </button>
+          </footer>
       </div>
-    
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-
-    <button class="js-modal-trigger" data-target="modal-js-example">
-    </button>
+  </div>
     
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
