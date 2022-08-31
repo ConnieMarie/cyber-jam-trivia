@@ -70,53 +70,27 @@ if ($("body").hasClass("homepage")) {
       //if a category was select, redirects to the game page
       document.location.href = "game-page.html";
     } else {
-      openModal(); 
-      return;
+      var alertTitle = "In Order To Play...";
+      var alertMessage = "Please select a topic! You can't answer questions about nothing!";
+      var alertButtonMessage = "Got it!"
+      openModal(alertTitle, alertMessage, alertButtonMessage); 
     }
   });
 }
 
+function openModal(modalTitle, modalMessage, modalButtonText) {
+  
+$("body").append(
+    "<div class='modal is-active' id='modal-select-topic'><div class='modal-background'></div><div class='modal-card'><header class='modal-card-head'><p class='modal-card-title'>" + modalTitle + "</p></header><section class='modal-card-body'><h1></h1><p>" + modalMessage + "</p></section><footer class='modal-card-foot'><button class='button is-primary' id='modalButton'>" + modalButtonText + "</button></footer></div></div>"
+  );
 
-// Function to open the modal
-function openModal() {
-    
-    // Add is-active class on the modal
-    document.getElementById("modal-select-topic").classList.add("is-active");
-  }
-   
-  // Function to close the modal
-  function closeModal() {
-    document.getElementById("modal-select-topic").classList.remove("is-active");
-  }
-   
-  // Add event listeners to close the modal
-  // whenever user click outside modal
-  document.querySelectorAll(
-   ".modal-background",
-   ".modal-close",
-   ".modal-card-head",
-   ".delete",
-   ".modal-card-foot",
-   ".button"
-  ).forEach(($el) => {
-            const $modal = $el.closest(".modal");
-            $el.addEventListener("click", () => {
-             
-            // Remove the is-active class from the modal
-            $modal.classList.remove("is-active");
-          });
-        });
-         
-        // Adding keyboard event listeners to close the modal
-        document.addEventListener("keydown", (event) => {
-        const e = event || window.event;
-            if (e.keyCode === 27) {
-             
-             // Using escape key
-              closeModal();
-            }
-         });
 
+$("body").on("click", "#modalButton", function () {
+  $("body").off("click", "#modalButton");
+  console.log("clicked return home");
+  $("#modal-select-topic").remove();
+});
+}
 
 
 //runs event listeners specific to the gamePage
