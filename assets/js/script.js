@@ -1,6 +1,6 @@
 var questionData; //need global for click event
 var score = 0;
-var gameQuestionCountLimit = 3;
+var gameQuestionCountLimit = 1;
 var gameQuestionCount = 0;
 var gameCategoryId = "";
 var giphyApiKey = "IqouWAvchaDj6oy5b7niRntKCW50BpKB";
@@ -17,6 +17,22 @@ var gameCategoryList = [
   {
     id: 23,
     name: "History",
+  },
+];
+
+// dummy high score list
+var highScoreList = [
+  {
+    name: "Rockin Connie",
+    score: 8,
+  },
+  {
+    name: "Mark the Destroyer",
+    score: 9,
+  },
+  {
+    name: "The Gabinator",
+    score: 4,
   },
 ];
 
@@ -184,7 +200,7 @@ function displayQuestion(triviaData) {
   var choiceButtonAppender = [];
   for (var i = 0; i < 4; i++) {
     choiceButtonAppender.push(
-      "<button class='button my-5 is-primary is-large is-fullwidth has-text-weight-bold choiceButton'>" +
+      "<button class='button my-5 has-background-primary-dark has-text-white is-large is-fullwidth has-text-weight-bold choiceButton'>" +
         triviaData.choices[i] +
         "</button>"
     );
@@ -200,7 +216,7 @@ function displayQuestion(triviaData) {
   // creates question area elements and slides in from left
   $("#questionArea")
     .html(
-      "<article class='message is-primary my-5'><div class='message-header'><p id='questionTitle' class='title is-4 has-text-white'>Question " +
+      "<article class='message is-primary my-5'><div class='message-header has-background-primary-dark has-text-white'><p id='questionTitle' class='title is-4 has-text-white'>Question " +
         gameQuestionCount +
         "</p></div><div id='questionBody' class='message-body is-size-4 has-text-left'>" +
         triviaData.question +
@@ -220,12 +236,12 @@ function displayQuestion(triviaData) {
     if (chosenAnswer == questionData.answer) {
       console.log("Correct");
       score++;
-      $(this).removeClass("is-primary");
+      $(this).removeClass("has-background-primary-dark");
       $(this).addClass("is-success");
       //provide user response
     } else {
       console.log("Incorrect");
-      $(this).removeClass("is-primary");
+      $(this).removeClass("has-background-primary-dark");
       $(this).addClass("is-danger");
       //provide user response
     }
@@ -241,7 +257,7 @@ function displayQuestion(triviaData) {
     }
 
     $("#questionBody").append(
-      "<div class='has-text-centered mt-6'><button class='button is-primary is-large px-6' id='nextQuestion'>" +
+      "<div class='has-text-centered mt-6'><button class='button has-background-primary-dark has-text-white is-large px-6' id='nextQuestion'>" +
         nextButtonText +
         "</button></div>"
     );
@@ -253,6 +269,86 @@ function displayQuestion(triviaData) {
   });
 }
 
-function endGame() {}
+function endGame() {
+  // Determine high score
+  // get local storage high score, if not there, using 0
+  // var highScoreList = localStorage.getItem("triviahighscore");
+  var newHighScore = false;
+  if (highScoreList === null) {
+    newHighScore = true;
+  } else {
+    console.log(highScoreList.length);
+    for (var i = 0; i < highScoreList.length; i++) {
+      if (score > highScoreList[i].score) {
+        newHighScore = true;
+      }
+    }
+  }
+
+  if (newHighScore) {
+    // prompt for high score input
+    // add to the high score array
+    // localStorage.setItem("highscore", playerInfo.money);
+    // localStorage.setItem("name", playerInfo.name);
+    // add to local storage
+
+    // update message unique to getting a high score
+    var endMessage =
+      "Amazing! You had a perfect score by answering all " +
+      score +
+      " questions correctly!";
+  } else {
+    // no new high score messages
+    // creates end message based on score %
+    if (score / gameQuestionCountLimit === 100) {
+      //??? not sure if they can get a perfect score but not a high score.
+      var endMessage =
+        "Amazing! You had a perfect score by answering all " +
+        score +
+        " questions correctly!";
+    } else if (score / gameQuestionCountLimit >= 85) {
+      var endMessage =
+        "Great job! You really know your stuff. You answered " +
+        score +
+        " questions correctly!";
+    } else if (score / gameQuestionCountLimit >= 70) {
+      var endMessage =
+        "You answered " +
+        score +
+        " of " +
+        gameQuestionCountLimit +
+        " questions correctly. Not too bad! Give it another try!";
+    } else {
+      var endMessage =
+        "You answered " +
+        score +
+        " of " +
+        gameQuestionCountLimit +
+        " questions correctly. Maybe trivia is not your jam. How about you try again and find out!";
+    }
+  }
+
+  // clears game area and provides the user a results
+
+  $("#gameArea").html(
+    "<div id='gameArea' class='column has-text-centered is-10'><article class='message is-primary my-5'><div class='message-header'><p class='title is-4 has-text-white'>Best of Luck!</p></div><div class='message-body is-size-3 has-text-left'>" +
+      endMessage +
+      "</div><button class='button is-primary is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button is-primary is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button></article></div>"
+  );
+
+  $("#gameArea").on("click", "#returnHome", function () {
+    $("#gameArea").off("click", "#returnHome");
+    $("#gameArea").off("click", "#viewHighScore");
+    console.log("clicked return home");
+    document.location.href = "index.html";
+  });
+  $("#gameArea").on("click", "#viewHighScore", function () {
+    $("#gameArea").off("click", "#viewHighScore");
+    $("#gameArea").off("click", "#returnHome");
+    console.log("clicked View High Score");
+    document.location.href = "high-score.html";
+  });
+}
 
 // getQuestion();
+// next
