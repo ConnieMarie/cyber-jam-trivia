@@ -1,9 +1,10 @@
 var questionData; //need global for click event
 var score = 0;
+var highScoreList = {};
 var gameQuestionCountLimit = 3;
 var gameQuestionCount = 0;
 var gameCategoryId = "";
-var giphyImgUrl = "" //function nested and not returning to original call
+var giphyImgUrl = ""; //function nested and not returning to original call
 var giphyRandomRange = 20;
 var giphyApiKey = "IqouWAvchaDj6oy5b7niRntKCW50BpKB";
 var giphyApiUrl =
@@ -44,29 +45,44 @@ var highScoreList = [
 var giphyKeyword = [
   {
     category: "New High Score",
-    keywords: ["high+score","winner","champion", "gold+medal","winner+winner+chicken+dinner"],
+    keywords: [
+      "high+score",
+      "winner",
+      "champion",
+      "gold+medal",
+      "winner+winner+chicken+dinner",
+    ],
   },
   {
     category: "Good Score",
-    keywords: ["success","amazing","brainiac","smarty+pants","you+are+a+genius"],
+    keywords: [
+      "success",
+      "amazing",
+      "brainiac",
+      "smarty+pants",
+      "you+are+a+genius",
+    ],
   },
   {
     category: "Bad Score",
-    keywords: ["better+luck+next+time","keep+trying","not+your+jam","you+got+this"],
+    keywords: [
+      "better+luck+next+time",
+      "keep+trying",
+      "not+your+jam",
+      "you+got+this",
+    ],
   },
-]
+];
 
+//navbar menu active toggle
+$("header").on("click", ".navbar-burger", function () {
+  $(".navbar-burger").toggleClass("is-active");
+  $(".navbar-menu").toggleClass("is-active");
+});
 
 // *** HOME PAGE ***
 //runs event listeners specific to the main page
 if ($("body").hasClass("homepage")) {
-  //navbar menu active toggle
-  $("header").on("click", ".navbar-burger", function () {
-    $(".navbar-burger").toggleClass("is-active");
-    $(".navbar-menu").toggleClass("is-active");
-  });
-
-
   //toggles the bulma dropdown button reveal
   var dropdown = document.querySelector(".dropdown");
   dropdown.addEventListener("click", function (event) {
@@ -130,6 +146,37 @@ if ($("body").hasClass("triviaPage")) {
       document.location.href = "index.html";
     }
   });
+}
+
+// *** HIGH SCORE PAGE ***
+//runs event listeners specific to the gamePage
+if ($("body").hasClass("highScorePage")) {
+  // get local storage high score
+  highScoreList = JSON.parse(localStorage.getItem("triviahighscore"));
+  console.log(highScoreList);
+  //if no high score list, user obtained a new high score
+  var tableData = "";
+  if (highScoreList === null) {
+    tableData =
+      "<tr><td></td><td>No high scores, easy mode enabled!</td><td></td></tr>";
+  } else {
+    // else check all scores in array to determine if high score achieved
+    console.log(highScoreList.length);
+    for (var i = 0; i < highScoreList.length; i++) {
+      tableData =
+        tableData +
+        "<tr><td>" +
+        (i + 1) +
+        "</td><td>" +
+        highScoreList[i].name +
+        "</td><td>" +
+        highScoreList[i].score +
+        "</td></tr>";
+    }
+
+    console.log(tableData);
+  }
+  $("#tableListBody").append(tableData);
 }
 
 function openModal(modalTitle, modalMessage, modalButtonText) {
@@ -320,28 +367,31 @@ function displayQuestion(triviaData) {
 
 function giphyFetchImg(searchType) {
   // searchType = category of words seeded at top of script page in giphyKeyword object array
-    //replacing the giphy search based on the category requested when function was called
+  //replacing the giphy search based on the category requested when function was called
 
-    // for loop first runs through the array looking for matching category provided when function was called
-    for (var i = 0; i < giphyKeyword.length; i++) {
-      if (searchType === giphyKeyword[i].category) {
-        // once category is found, returns a random keyword seeded in the same object for the category
-        var randomKeyword = giphyKeyword[i].keywords[(Math.floor(Math.random() * giphyKeyword[i].keywords.length))]
-        console.log(randomKeyword);
-      }
+  // for loop first runs through the array looking for matching category provided when function was called
+  for (var i = 0; i < giphyKeyword.length; i++) {
+    if (searchType === giphyKeyword[i].category) {
+      // once category is found, returns a random keyword seeded in the same object for the category
+      var randomKeyword =
+        giphyKeyword[i].keywords[
+          Math.floor(Math.random() * giphyKeyword[i].keywords.length)
+        ];
+      console.log(randomKeyword);
     }
-      var giphyFetchUrl = giphyApiUrl.replace("<searchTerm>", randomKeyword);
+  }
+  var giphyFetchUrl = giphyApiUrl.replace("<searchTerm>", randomKeyword);
 
-      console.log(giphyFetchUrl);
-    
-    // add api key to the url
-    giphyFetchUrl = giphyFetchUrl.replace("<giphyApiKey>", giphyApiKey);
+  console.log(giphyFetchUrl);
 
-    // adding a parameter that will obtain an image randomly from zero to the giphy limit (e.g. 0-4999)
-    giphyFetchUrl = giphyFetchUrl.replace(
-      "<randomNum>",
-      Math.floor(Math.random() * giphyRandomRange)
-    );
+  // add api key to the url
+  giphyFetchUrl = giphyFetchUrl.replace("<giphyApiKey>", giphyApiKey);
+
+  // adding a parameter that will obtain an image randomly from zero to the giphy limit (e.g. 0-4999)
+  giphyFetchUrl = giphyFetchUrl.replace(
+    "<randomNum>",
+    Math.floor(Math.random() * giphyRandomRange)
+  );
   console.log(giphyFetchUrl);
 
   // make a request to the url
@@ -356,35 +406,37 @@ function giphyFetchImg(searchType) {
           console.log(giphyImgUrl);
 
           if (giphyImgUrl && giphyImgUrl != "") {
-            console.log(true)
-          $("#giphyImgContainer").append("<figure class='image is-max256w'><img src='" + giphyImgUrl + "'></figure>")
+            console.log(true);
+            $("#giphyImgContainer").append(
+              "<figure class='image is-max256w mb-4'><img src='" +
+                giphyImgUrl +
+                "'></figure>"
+            );
           }
-
-          
         });
       } else {
         console.log("Giphy API Error: Unable to retreive a GIF");
         return null;
       }
-      
     })
     .catch(function (error) {
       // Notice this `.catch()` getting chained onto the end of the `.then()` method
       console.log("Giphy API Error: Unable to connect to giphy database");
       return null;
     });
-
-  
-};
+}
 
 function endGame() {
   // Determine high score
-  // get local storage high score, if not there, using 0
-  // var highScoreList = localStorage.getItem("triviahighscore");
-  var newHighScore = false;
+  // get local storage high score
+  highScoreList = JSON.parse(localStorage.getItem("triviahighscore"));
+
+  //if no high score list, user obtained a new high score
+  var newHighScore = true;
   if (highScoreList === null) {
     newHighScore = true;
   } else {
+    // else check all scores in array to determine if high score achieved
     console.log(highScoreList.length);
     for (var i = 0; i < highScoreList.length; i++) {
       if (score > highScoreList[i].score) {
@@ -393,50 +445,47 @@ function endGame() {
     }
   }
 
-
+  //if user achieved high score, prompt asking for input of name
   if (newHighScore) {
-    // prompt for high score input
-    // add to the high score array
-    // localStorage.setItem("highscore", playerInfo.money);
-    // localStorage.setItem("name", playerInfo.name);
-    // add to local storage
-
     // end message
-    // update message unique to getting a high score
+    // update message unique to getting a high score and ask for name input
+    var endMessage =
+      "A new high score of <strong>" +
+      score +
+      "</strong> correct answers! Congratulations! Please enter a name to remember you by below and join the ranks amongst the greatest trivia master of all time!";
 
-        var endMessage =
-          "A new high score of <strong>" +
-          score +
-          "</strong> correct answers! Congratulations! Please enter a name to remember you by below and join the ranks amongst the greatest trivia master of all time!";
+    $("#gameArea").html(
+      "<article class='message is-primary my-5'><div class='message-header'><p class='title is-4 has-text-white'>Game Over!</p></div><div class='message-body is-size-3 has-text-left'>" +
+        endMessage +
+        "</div class='container'><div id='giphyImgContainer'class='container columns is-centered mx-auto my-0'></div><div class='field mx-6 my-3'><div class='control has-icons-right'><form id='submitForm'><input id='highScoreInput' class='input is-medium is-primary' type='text' placeholder='By what name shall we remember you by?'/><span class='icon is-small is-left is-primary'><i class='fa-solid fa-person-pinball'></i></span><div class='control my-4'><input id='nameSubmitBtn' class='button is-primary is-medium mb-4' type='submit' value='Etch into Stone'></div></div></div></article>"
+    );
 
-        $("#gameArea").html(
-          "<article class='message is-primary my-5'><div class='message-header'><p class='title is-4 has-text-white'>Game Over!</p></div><div class='message-body is-size-3 has-text-left'>" +
-            endMessage +
-            "</div class='container'><div id='giphyImgContainer'class='container columns is-centered mx-auto my-0'></div><div class='field mx-6 my-3'><div class='control has-icons-right'><input id='highScoreInput' class='input is-medium is-primary' type='text' placeholder='By what name shall we remember you by?'/><span class='icon is-small is-left is-primary'><i class='fa-solid fa-person-pinball'></i></span><div id='nameSubmitBtn' class='control my-4'><a class='button is-primary is-medium mb-4'>Etch into Stone</a></div></div></div></article>"
-        );
-        
-        giphyFetchImg("New High Score");
-        
+    // get image and apply only if successful. layout not impacted if unsuccessful.
+    giphyFetchImg("New High Score");
 
-        // if (imgUrl && imgUrl != "") {
-        //   console.log(true)
-        // $("#giphyImgContainer").append("<figure class='image is-max256w'><img src='" + imgUrl + "'></figure>")
-        // }
-
-
-    $("#gameArea").on("click", "#nameSubmitBtn", function () {
+    //wait fo ruser to click submit
+    $("#gameArea").on("submit", "#submitForm", function (event) {
+      event.preventDefault();
       $("#gameArea").off("click", "#nameSubmitBtn");
 
-        var newEntry = [
-          {
-            name: $("#nameSubmitBtn").val(),
-            score: score,
-          },
-        ];
+      var newEntry = [
+        {
+          name: $("#highScoreInput").val(),
+          score: score,
+          date: Date.now(),
+        },
+      ];
+
+      $("#highScoreInput").attr("placeholder", newEntry.name);
+      $("#highScoreInput").prop("disabled", true);
+      $("#nameSubmitBtn").prop("disabled", true);
+      console.log(newEntry);
+      console.log(newEntry[0].name);
+      console.log(newEntry[0].score);
+      console.log(newEntry[0].date);
 
       if (highScoreList === null) {
-        highScoreList.push() = newEntry;
-
+        highScoreList = newEntry;
       } else {
         for (var i = 0; i < highScoreList.length; i++) {
           if (score > highScoreList[i].score) {
@@ -447,6 +496,8 @@ function endGame() {
           highScoreList.length = 10;
         }
       }
+
+      localStorage.setItem("triviahighscore", JSON.stringify(highScoreList));
 
       // add after submit
       $(".message").append(
@@ -469,12 +520,12 @@ function endGame() {
   } else {
     // no new high score messages
     // creates end message based on score %
-if ((score / gameQuestionCountLimit) * 100 >= 85) {
+    if ((score / gameQuestionCountLimit) * 100 >= 85) {
       var endMessage =
         "Great job! You really know your stuff. You answered <strong>" +
         score +
         "</strong> questions correctly!";
-      var imgCategory = "Good Score"
+      var imgCategory = "Good Score";
     } else if ((score / gameQuestionCountLimit) * 100 >= 70) {
       var endMessage =
         "You answered <strong>" +
@@ -482,7 +533,7 @@ if ((score / gameQuestionCountLimit) * 100 >= 85) {
         "</strong> of <strong>" +
         gameQuestionCountLimit +
         "</strong> questions correctly. Not too bad! Give it another try!";
-        var imgCategory = "Good Score"
+      var imgCategory = "Good Score";
     } else {
       var endMessage =
         "You answered <strong>" +
@@ -490,14 +541,14 @@ if ((score / gameQuestionCountLimit) * 100 >= 85) {
         "</strong> of <strong>" +
         gameQuestionCountLimit +
         "</strong> questions correctly. Maybe trivia is not your jam. How about you try again and find out!";
-        var imgCategory = "Bad Score"
+      var imgCategory = "Bad Score";
     }
 
     // clears game area and provides the user a results
     $("#gameArea").html(
       "<div id='gameArea' class='column has-text-centered is-10'><article class='message is-primary my-5'><div class='message-header'><p class='title is-4 has-text-white'>Game Over!</p></div><div class='message-body is-size-3 has-text-left'>" +
         endMessage +
-        "</div><button class='button is-primary is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button is-primary is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button></article></div>"
+        "</div><div id='giphyImgContainer'class='container columns is-centered mx-auto my-0'></div><button class='button is-primary is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button is-primary is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button></article></div>"
     );
 
     giphyFetchImg(imgCategory);
