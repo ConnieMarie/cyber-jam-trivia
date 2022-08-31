@@ -81,7 +81,7 @@ if ($("body").hasClass("homepage")) {
 function openModal(modalTitle, modalMessage, modalButtonText) {
   
 $("body").append(
-    "<div class='modal is-active' id='modal-select-topic'><div class='modal-background'></div><div class='modal-card'><header class='modal-card-head'><p class='modal-card-title'>" + modalTitle + "</p></header><section class='modal-card-body'><h1></h1><p>" + modalMessage + "</p></section><footer class='modal-card-foot'><button class='button is-primary' id='modalButton'>" + modalButtonText + "</button></footer></div></div>"
+    "<div class='modal is-active' id='modal-select-topic'><div class='modal-background'></div><div class='modal-card'><header class='modal-card-head'><p class='modal-card-title'>" + modalTitle + "</p></header><section class='modal-card-body'><h1></h1><p>" + modalMessage + "</p></section><footer class='modal-card-foot'><button class='button has-background-primary-dark has-text-white' id='modalButton'>" + modalButtonText + "</button></footer></div></div>"
   );
 
 
@@ -348,9 +348,9 @@ function endGame() {
   // clears game area and provides the user a results
 
   $("#gameArea").html(
-    "<div id='gameArea' class='column has-text-centered is-10'><article class='message is-primary my-5'><div class='message-header'><p class='title is-4 has-text-white'>Best of Luck!</p></div><div class='message-body is-size-3 has-text-left'>" +
+    "<div id='gameArea' class='column has-text-centered is-10'><article class='message has-background-primary-dark has-text-white my-5'><div class='message-header'><p class='title is-4 has-text-white'>Best of Luck!</p></div><div class='message-body is-size-3 has-text-left'>" +
       endMessage +
-      "</div><button class='button is-primary is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button is-primary is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button></article></div>"
+      "</div><button class='button has-background-primary-dark has-text-white is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button has-background-primary-dark has-text-white is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button></article></div>"
   );
 
   $("#gameArea").on("click", "#returnHome", function () {
