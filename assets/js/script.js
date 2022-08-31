@@ -70,11 +70,28 @@ if ($("body").hasClass("homepage")) {
       //if a category was select, redirects to the game page
       document.location.href = "game-page.html";
     } else {
-      //prompt user to select a trivia topic and does not change page
-      // Try a bulma modal prompt???
+      var alertTitle = "In Order To Play...";
+      var alertMessage = "Please select a topic! You can't answer questions about nothing!";
+      var alertButtonMessage = "Got it!"
+      openModal(alertTitle, alertMessage, alertButtonMessage); 
     }
   });
 }
+
+function openModal(modalTitle, modalMessage, modalButtonText) {
+  
+$("body").append(
+    "<div class='modal is-active' id='modal-select-topic'><div class='modal-background'></div><div class='modal-card'><header class='modal-card-head'><p class='modal-card-title'>" + modalTitle + "</p></header><section class='modal-card-body'><h1></h1><p>" + modalMessage + "</p></section><footer class='modal-card-foot'><button class='button is-primary' id='modalButton'>" + modalButtonText + "</button></footer></div></div>"
+  );
+
+
+$("body").on("click", "#modalButton", function () {
+  $("body").off("click", "#modalButton");
+  console.log("clicked return home");
+  $("#modal-select-topic").remove();
+});
+}
+
 
 //runs event listeners specific to the gamePage
 if ($("body").hasClass("triviaPage")) {
