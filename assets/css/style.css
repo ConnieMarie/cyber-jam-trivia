@@ -1,7 +1,5 @@
 .footer {
-  /* background-color: hsl(171, 100%, 96%); */
   background-color: hsl(171, 100%, 41%);
-  /* background-color: #00d1b2; */
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -12,5 +10,15 @@
 }
 
 .button, .btn {
-  box-shadow: 5px 5px 5px hsl(171, 100%, 29%);
+  box-shadow: 2px 2px 5px rgb(0, 148, 126);
+}
+
+.dropdown-menu {
+  margin: auto;
+}
+
+
+.progress::-webkit-progress-value {
+  background-color: #AF125A !important;
+  
 }

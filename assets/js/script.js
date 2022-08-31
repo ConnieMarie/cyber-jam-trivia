@@ -1,6 +1,6 @@
 var questionData; //need global for click event
 var score = 0;
-var gameQuestionCountLimit = 1;
+var gameQuestionCountLimit = 20;
 var gameQuestionCount = 0;
 var gameCategoryId = "";
 var giphyApiKey = "IqouWAvchaDj6oy5b7niRntKCW50BpKB";
@@ -113,6 +113,7 @@ if ($("body").hasClass("triviaPage")) {
       //if category variable is empty (user directly access game page bypassing category question), redirects to the home page to have user select the trivia category
       document.location.href = "index.html";
     }
+    
   });
 }
 
@@ -194,6 +195,7 @@ var getQuestion = function () {
             // console.log(questionData);
 
             displayQuestion(questionData);
+            
           });
         } else {
           // bulma loading icon class
@@ -217,11 +219,16 @@ function displayQuestion(triviaData) {
   var choiceButtonAppender = [];
   for (var i = 0; i < 4; i++) {
     choiceButtonAppender.push(
-      "<button class='button my-5 has-background-primary-dark has-text-white is-large is-fullwidth has-text-weight-bold choiceButton'>" +
+      "<button class='button my-5 has-background-primary-dark has-text-white is-size-6 is-fullwidth has-text-weight-bold choiceButton'>" +
         triviaData.choices[i] +
         "</button>"
     );
+    
   }
+
+  //add progress bar upon clicking start
+  $("#progressBar").html("<div class='columns'><div class='column is-1'></div><progress class='progress 'value='" + gameQuestionCount + "' max='" + gameQuestionCountLimit + "'></progress><div class='column is-1'></div>")
+
   // combining array without delimiters into one html string
   var choiceButtonEl = choiceButtonAppender.join("");
 
@@ -243,6 +250,7 @@ function displayQuestion(triviaData) {
       $("#choiceButtons")
         .html(choiceButtonEl)
         .effect("slide", { direction: "right" }, 800);
+        
     });
 
   $("#gameArea").on("click", ".choiceButton", function () {
@@ -272,6 +280,8 @@ function displayQuestion(triviaData) {
     } else {
       var nextButtonText = "Next";
     }
+
+
 
     $("#questionBody").append(
       "<div class='has-text-centered mt-6'><button class='button has-background-primary-dark has-text-white is-large px-6' id='nextQuestion'>" +
@@ -348,10 +358,12 @@ function endGame() {
   // clears game area and provides the user a results
 
   $("#gameArea").html(
-    "<div id='gameArea' class='column has-text-centered is-10'><article class='message has-background-primary-dark has-text-white my-5'><div class='message-header'><p class='title is-4 has-text-white'>Best of Luck!</p></div><div class='message-body is-size-3 has-text-left'>" +
+    "<article class='message my-5'><div class='message-header has-background-primary-dark has-text-white'><p class='title is-4 has-text-white'>Results Are In!</p></div><div class='message-body is-size-3 has-text-primary-dark has-text-left'>" +
       endMessage +
       "</div><button class='button has-background-primary-dark has-text-white is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button has-background-primary-dark has-text-white is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button></article></div>"
   );
+    //remove progress bar when finish button is clicked
+  $("#progressBar").remove();
 
   $("#gameArea").on("click", "#returnHome", function () {
     $("#gameArea").off("click", "#returnHome");
