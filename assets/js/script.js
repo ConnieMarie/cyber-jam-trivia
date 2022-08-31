@@ -3,9 +3,11 @@ var score = 0;
 var gameQuestionCountLimit = 3;
 var gameQuestionCount = 0;
 var gameCategoryId = "";
+var giphyImgUrl = "" //function nested and not returning to original call
+var giphyRandomRange = 20;
 var giphyApiKey = "IqouWAvchaDj6oy5b7niRntKCW50BpKB";
 var giphyApiUrl =
-  "http://api.giphy.com/v1/gifs/search?q=<searchTerm>&api_key=<giphyApiKey>&limit=1";
+  "http://api.giphy.com/v1/gifs/search?q=<searchTerm>&api_key=<giphyApiKey>&limit=20&offset=<randomNum>";
 var triviaApiUrl =
   "https://opentdb.com/api.php?amount=1&category=<catId>&type=multiple";
 
@@ -38,6 +40,24 @@ var highScoreList = [
   },
 ];
 
+// giphy search terms
+var giphyKeyword = [
+  {
+    category: "New High Score",
+    keywords: ["high+score","winner","champion", "gold+medal","winner+winner+chicken+dinner"],
+  },
+  {
+    category: "Good Score",
+    keywords: ["success","amazing","brainiac","smarty+pants","you+are+a+genius"],
+  },
+  {
+    category: "Bad Score",
+    keywords: ["better+luck+next+time","keep+trying","not+your+jam","you+got+this"],
+  },
+]
+
+
+// *** HOME PAGE ***
 //runs event listeners specific to the main page
 if ($("body").hasClass("homepage")) {
   //navbar menu active toggle
@@ -88,24 +108,7 @@ if ($("body").hasClass("homepage")) {
   });
 }
 
-function openModal(modalTitle, modalMessage, modalButtonText) {
-  $("body").append(
-    "<div class='modal is-clipped is-active' id='modal-select-topic'><div class='modal-background'></div><div class='modal-card'><header class='modal-card-head'><p class='modal-card-title'>" +
-      modalTitle +
-      "</p></header><section class='modal-card-body is-size-4'><h1></h1><p>" +
-      modalMessage +
-      "</p></section><footer class='modal-card-foot'><button class='button is-primary is-large' id='modalButton'>" +
-      modalButtonText +
-      "</button></footer></div></div>"
-  );
-
-  $("body").on("click", "#modalButton", function () {
-    $("body").off("click", "#modalButton");
-    console.log("clicked return home");
-    $("#modal-select-topic").remove();
-  });
-}
-
+// *** GAME PAGE ***
 //runs event listeners specific to the gamePage
 if ($("body").hasClass("triviaPage")) {
   //loading sessionStorage
@@ -126,6 +129,24 @@ if ($("body").hasClass("triviaPage")) {
       //if category variable is empty (user directly access game page bypassing category question), redirects to the home page to have user select the trivia category
       document.location.href = "index.html";
     }
+  });
+}
+
+function openModal(modalTitle, modalMessage, modalButtonText) {
+  $("body").append(
+    "<div class='modal is-clipped is-active' id='modal-select-topic'><div class='modal-background'></div><div class='modal-card'><header class='modal-card-head'><p class='modal-card-title'>" +
+      modalTitle +
+      "</p></header><section class='modal-card-body is-size-4'><h1></h1><p>" +
+      modalMessage +
+      "</p></section><footer class='modal-card-foot'><button class='button is-primary is-large' id='modalButton'>" +
+      modalButtonText +
+      "</button></footer></div></div>"
+  );
+
+  $("body").on("click", "#modalButton", function () {
+    $("body").off("click", "#modalButton");
+    console.log("clicked return home");
+    $("#modal-select-topic").remove();
   });
 }
 
@@ -297,13 +318,30 @@ function displayQuestion(triviaData) {
   });
 }
 
-var giphyImg = function (searchTerm) {
-  var giphyFetchUrl = giphyApiUrl.replace("<searchTerm>", searchTerm);
-  giphyFetchUrl = giphyFetchUrl.replace("<giphyApiKey>", giphyApiKey);
-  giphyFetchUrl = giphyFetchUrl.replace(
-    "<randomNum>",
-    Math.floor(Math.random() * giphyRandomLimit)
-  );
+function giphyFetchImg(searchType) {
+  // searchType = category of words seeded at top of script page in giphyKeyword object array
+    //replacing the giphy search based on the category requested when function was called
+
+    // for loop first runs through the array looking for matching category provided when function was called
+    for (var i = 0; i < giphyKeyword.length; i++) {
+      if (searchType === giphyKeyword[i].category) {
+        // once category is found, returns a random keyword seeded in the same object for the category
+        var randomKeyword = giphyKeyword[i].keywords[(Math.floor(Math.random() * giphyKeyword[i].keywords.length))]
+        console.log(randomKeyword);
+      }
+    }
+      var giphyFetchUrl = giphyApiUrl.replace("<searchTerm>", randomKeyword);
+
+      console.log(giphyFetchUrl);
+    
+    // add api key to the url
+    giphyFetchUrl = giphyFetchUrl.replace("<giphyApiKey>", giphyApiKey);
+
+    // adding a parameter that will obtain an image randomly from zero to the giphy limit (e.g. 0-4999)
+    giphyFetchUrl = giphyFetchUrl.replace(
+      "<randomNum>",
+      Math.floor(Math.random() * giphyRandomRange)
+    );
   console.log(giphyFetchUrl);
 
   // make a request to the url
@@ -313,24 +351,37 @@ var giphyImg = function (searchTerm) {
       if (response.ok) {
         response.json().then(function (data) {
           console.log(data.data[0].images.downsized.url);
-          //return data;
-          //displayQuestion(data);
+
+          giphyImgUrl = data.data[0].images.downsized.url;
+          console.log(giphyImgUrl);
+
+          if (giphyImgUrl && giphyImgUrl != "") {
+            console.log(true)
+          $("#giphyImgContainer").append("<figure class='image is-max256w'><img src='" + giphyImgUrl + "'></figure>")
+          }
+
+          
         });
       } else {
-        alert("Giphy API Error: Unable to retreive a GIF");
+        console.log("Giphy API Error: Unable to retreive a GIF");
+        return null;
       }
+      
     })
     .catch(function (error) {
       // Notice this `.catch()` getting chained onto the end of the `.then()` method
-      alert("Giphy API Error: Unable to connect to giphy database");
+      console.log("Giphy API Error: Unable to connect to giphy database");
+      return null;
     });
+
+  
 };
 
 function endGame() {
   // Determine high score
   // get local storage high score, if not there, using 0
   // var highScoreList = localStorage.getItem("triviahighscore");
-  var newHighScore = true;
+  var newHighScore = false;
   if (highScoreList === null) {
     newHighScore = true;
   } else {
@@ -342,6 +393,7 @@ function endGame() {
     }
   }
 
+
   if (newHighScore) {
     // prompt for high score input
     // add to the high score array
@@ -349,17 +401,28 @@ function endGame() {
     // localStorage.setItem("name", playerInfo.name);
     // add to local storage
 
+    // end message
     // update message unique to getting a high score
-    var endMessage =
-      "A new high score of <strong>" +
-      score +
-      "</strong> correct answers! Congratulations! Please enter a name to remember you by below and join the ranks amongst the greatest trivia master of all time!";
 
-    $("#gameArea").html(
-      "<div id='gameArea' class='column has-text-centered is-10 pb-2'><article class='message is-primary my-5'><div class='message-header'><p class='title is-4 has-text-white'>Game Over!</p></div><div class='message-body is-size-3 has-text-left'>" +
-        endMessage +
-        "</div><div class='field mx-6 my-3'><div class='control has-icons-right'><input id='highScoreInput' class='input is-medium is-primary' type='text' placeholder='By what name shall we remember you by?'/><span class='icon is-small is-left is-primary'><i class='fa-solid fa-person-pinball'></i></span><div id='nameSubmitBtn' class='control my-4'><a class='button is-primary is-medium mb-4'>Etch into Stone</a></div></div></div></article></div>"
-    );
+        var endMessage =
+          "A new high score of <strong>" +
+          score +
+          "</strong> correct answers! Congratulations! Please enter a name to remember you by below and join the ranks amongst the greatest trivia master of all time!";
+
+        $("#gameArea").html(
+          "<article class='message is-primary my-5'><div class='message-header'><p class='title is-4 has-text-white'>Game Over!</p></div><div class='message-body is-size-3 has-text-left'>" +
+            endMessage +
+            "</div class='container'><div id='giphyImgContainer'class='container columns is-centered mx-auto my-0'></div><div class='field mx-6 my-3'><div class='control has-icons-right'><input id='highScoreInput' class='input is-medium is-primary' type='text' placeholder='By what name shall we remember you by?'/><span class='icon is-small is-left is-primary'><i class='fa-solid fa-person-pinball'></i></span><div id='nameSubmitBtn' class='control my-4'><a class='button is-primary is-medium mb-4'>Etch into Stone</a></div></div></div></article>"
+        );
+        
+        giphyFetchImg("New High Score");
+        
+
+        // if (imgUrl && imgUrl != "") {
+        //   console.log(true)
+        // $("#giphyImgContainer").append("<figure class='image is-max256w'><img src='" + imgUrl + "'></figure>")
+        // }
+
 
     $("#gameArea").on("click", "#nameSubmitBtn", function () {
       $("#gameArea").off("click", "#nameSubmitBtn");
@@ -406,31 +469,28 @@ function endGame() {
   } else {
     // no new high score messages
     // creates end message based on score %
-    if ((score / gameQuestionCountLimit) * 100 === 100) {
-      //??? not sure if they can get a perfect score but not a high score.
+if ((score / gameQuestionCountLimit) * 100 >= 85) {
       var endMessage =
-        "Amazing! You had a perfect score by answering all " +
+        "Great job! You really know your stuff. You answered <strong>" +
         score +
-        " questions correctly!";
-    } else if ((score / gameQuestionCountLimit) * 100 >= 85) {
-      var endMessage =
-        "Great job! You really know your stuff. You answered " +
-        score +
-        " questions correctly!";
+        "</strong> questions correctly!";
+      var imgCategory = "Good Score"
     } else if ((score / gameQuestionCountLimit) * 100 >= 70) {
       var endMessage =
-        "You answered " +
+        "You answered <strong>" +
         score +
-        " of " +
+        "</strong> of <strong>" +
         gameQuestionCountLimit +
-        " questions correctly. Not too bad! Give it another try!";
+        "</strong> questions correctly. Not too bad! Give it another try!";
+        var imgCategory = "Good Score"
     } else {
       var endMessage =
-        "You answered " +
+        "You answered <strong>" +
         score +
-        " of " +
+        "</strong> of <strong>" +
         gameQuestionCountLimit +
-        " questions correctly. Maybe trivia is not your jam. How about you try again and find out!";
+        "</strong> questions correctly. Maybe trivia is not your jam. How about you try again and find out!";
+        var imgCategory = "Bad Score"
     }
 
     // clears game area and provides the user a results
@@ -439,6 +499,8 @@ function endGame() {
         endMessage +
         "</div><button class='button is-primary is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button is-primary is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button></article></div>"
     );
+
+    giphyFetchImg(imgCategory);
 
     $("#gameArea").on("click", "#returnHome", function () {
       $("#gameArea").off("click", "#returnHome");

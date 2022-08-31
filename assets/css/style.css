@@ -31,3 +31,8 @@
     flex: none;
     width: 30%;
 } */
+
+.image.is-256x256 {
+  /* height: 256px; */
+  max-width: 256px;
+}
