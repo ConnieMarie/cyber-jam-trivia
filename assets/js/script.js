@@ -70,9 +70,30 @@ if ($("body").hasClass("homepage")) {
       //if a category was select, redirects to the game page
       document.location.href = "game-page.html";
     } else {
-      //prompt user to select a trivia topic and does not change page
-      // Try a bulma modal prompt???
+      var alertTitle = "In Order To Play...";
+      var alertMessage =
+        "Please select a topic! You can't answer questions about nothing!";
+      var alertButtonMessage = "Got it!";
+      openModal(alertTitle, alertMessage, alertButtonMessage);
     }
+  });
+}
+
+function openModal(modalTitle, modalMessage, modalButtonText) {
+  $("body").append(
+    "<div class='modal is-active' id='modal-select-topic'><div class='modal-background'></div><div class='modal-card'><header class='modal-card-head'><p class='modal-card-title'>" +
+      modalTitle +
+      "</p></header><section class='modal-card-body'><h1></h1><p>" +
+      modalMessage +
+      "</p></section><footer class='modal-card-foot'><button class='button is-primary' id='modalButton'>" +
+      modalButtonText +
+      "</button></footer></div></div>"
+  );
+
+  $("body").on("click", "#modalButton", function () {
+    $("body").off("click", "#modalButton");
+    console.log("clicked return home");
+    $("#modal-select-topic").remove();
   });
 }
 
@@ -228,7 +249,34 @@ function displayQuestion(triviaData) {
         .effect("slide", { direction: "right" }, 1000);
     });
 
-  // test
+  var giphyImg = function (searchTerm) {
+    var giphyFetchUrl = giphyApiUrl.replace("<searchTerm>", searchTerm);
+    giphyFetchUrl = giphyFetchUrl.replace("<giphyApiKey>", giphyApiKey);
+    giphyFetchUrl = giphyFetchUrl.replace(
+      "<randomNum>",
+      Math.floor(Math.random() * giphyRandomLimit)
+    );
+    console.log(giphyFetchUrl);
+
+    // make a request to the url
+    fetch(giphyFetchUrl)
+      .then(function (response) {
+        // request was successful
+        if (response.ok) {
+          response.json().then(function (data) {
+            console.log(data.data[0].images.downsized.url);
+            //return data;
+            //displayQuestion(data);
+          });
+        } else {
+          alert("Giphy API Error: Unable to retreive a GIF");
+        }
+      })
+      .catch(function (error) {
+        // Notice this `.catch()` getting chained onto the end of the `.then()` method
+        alert("Giphy API Error: Unable to connect to giphy database");
+      });
+  };
 
   $("#gameArea").on("click", ".choiceButton", function () {
     $("#gameArea").off("click", ".choiceButton");
@@ -300,18 +348,18 @@ function endGame() {
   } else {
     // no new high score messages
     // creates end message based on score %
-    if (score / gameQuestionCountLimit === 100) {
+    if ((score / gameQuestionCountLimit) * 100 === 100) {
       //??? not sure if they can get a perfect score but not a high score.
       var endMessage =
         "Amazing! You had a perfect score by answering all " +
         score +
         " questions correctly!";
-    } else if (score / gameQuestionCountLimit >= 85) {
+    } else if ((score / gameQuestionCountLimit) * 100 >= 85) {
       var endMessage =
         "Great job! You really know your stuff. You answered " +
         score +
         " questions correctly!";
-    } else if (score / gameQuestionCountLimit >= 70) {
+    } else if ((score / gameQuestionCountLimit) * 100 >= 70) {
       var endMessage =
         "You answered " +
         score +
@@ -349,6 +397,3 @@ function endGame() {
     document.location.href = "high-score.html";
   });
 }
-
-// getQuestion();
-// next
