@@ -245,6 +245,34 @@ function displayQuestion(triviaData) {
         .effect("slide", { direction: "right" }, 800);
     });
 
+var giphyImg = function(searchTerm) {
+
+  var giphyFetchUrl = giphyApiUrl.replace("<searchTerm>", searchTerm);
+  giphyFetchUrl = giphyFetchUrl.replace("<giphyApiKey>", giphyApiKey);
+  giphyFetchUrl = giphyFetchUrl.replace("<randomNum>", (Math.floor(Math.random() * giphyRandomLimit)))
+  console.log(giphyFetchUrl);
+
+  // make a request to the url
+  fetch(giphyFetchUrl)
+    .then(function (response) {
+      // request was successful
+      if (response.ok) {
+        response.json().then(function (data) {
+          console.log(data.data[0].images.downsized.url);
+          //return data;
+          //displayQuestion(data);
+        });
+      } else {
+        alert("Giphy API Error: Unable to retreive a GIF");
+      }
+    })
+    .catch(function (error) {
+      // Notice this `.catch()` getting chained onto the end of the `.then()` method
+      alert("Giphy API Error: Unable to connect to giphy database");
+    });
+}
+
+
   $("#gameArea").on("click", ".choiceButton", function () {
     $("#gameArea").off("click", ".choiceButton");
     var chosenAnswer = $(this).text();
@@ -367,5 +395,4 @@ function endGame() {
   });
 }
 
-// getQuestion();
-// next
+
