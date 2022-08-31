@@ -20,3 +20,14 @@
 .dropdown-menu {
   margin-left: auto;
 }
+
+/* @media screen and (max-width: 1024px) {
+  #dropdownText { */
+/* font-size: 1rem !important; */
+/* min-width: 20%;
+  }
+
+  .column.is-3, .column.is-3-tablet {
+    flex: none;
+    width: 30%;
+} */

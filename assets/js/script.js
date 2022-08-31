@@ -9,6 +9,8 @@ var giphyApiUrl =
 var triviaApiUrl =
   "https://opentdb.com/api.php?amount=1&category=<catId>&type=multiple";
 
+// var motivationalApiUrl = "https://nodejs-quoteapp.herokuapp.com/quote"
+
 var gameCategoryList = [
   {
     id: 12,
@@ -81,11 +83,11 @@ if ($("body").hasClass("homepage")) {
 
 function openModal(modalTitle, modalMessage, modalButtonText) {
   $("body").append(
-    "<div class='modal is-active' id='modal-select-topic'><div class='modal-background'></div><div class='modal-card'><header class='modal-card-head'><p class='modal-card-title'>" +
+    "<div class='modal is-clipped is-active' id='modal-select-topic'><div class='modal-background'></div><div class='modal-card'><header class='modal-card-head'><p class='modal-card-title'>" +
       modalTitle +
-      "</p></header><section class='modal-card-body'><h1></h1><p>" +
+      "</p></header><section class='modal-card-body is-size-4'><h1></h1><p>" +
       modalMessage +
-      "</p></section><footer class='modal-card-foot'><button class='button is-primary' id='modalButton'>" +
+      "</p></section><footer class='modal-card-foot'><button class='button is-primary is-large' id='modalButton'>" +
       modalButtonText +
       "</button></footer></div></div>"
   );
@@ -249,35 +251,6 @@ function displayQuestion(triviaData) {
         .effect("slide", { direction: "right" }, 1000);
     });
 
-  var giphyImg = function (searchTerm) {
-    var giphyFetchUrl = giphyApiUrl.replace("<searchTerm>", searchTerm);
-    giphyFetchUrl = giphyFetchUrl.replace("<giphyApiKey>", giphyApiKey);
-    giphyFetchUrl = giphyFetchUrl.replace(
-      "<randomNum>",
-      Math.floor(Math.random() * giphyRandomLimit)
-    );
-    console.log(giphyFetchUrl);
-
-    // make a request to the url
-    fetch(giphyFetchUrl)
-      .then(function (response) {
-        // request was successful
-        if (response.ok) {
-          response.json().then(function (data) {
-            console.log(data.data[0].images.downsized.url);
-            //return data;
-            //displayQuestion(data);
-          });
-        } else {
-          alert("Giphy API Error: Unable to retreive a GIF");
-        }
-      })
-      .catch(function (error) {
-        // Notice this `.catch()` getting chained onto the end of the `.then()` method
-        alert("Giphy API Error: Unable to connect to giphy database");
-      });
-  };
-
   $("#gameArea").on("click", ".choiceButton", function () {
     $("#gameArea").off("click", ".choiceButton");
     var chosenAnswer = $(this).text();
@@ -317,11 +290,40 @@ function displayQuestion(triviaData) {
   });
 }
 
+var giphyImg = function (searchTerm) {
+  var giphyFetchUrl = giphyApiUrl.replace("<searchTerm>", searchTerm);
+  giphyFetchUrl = giphyFetchUrl.replace("<giphyApiKey>", giphyApiKey);
+  giphyFetchUrl = giphyFetchUrl.replace(
+    "<randomNum>",
+    Math.floor(Math.random() * giphyRandomLimit)
+  );
+  console.log(giphyFetchUrl);
+
+  // make a request to the url
+  fetch(giphyFetchUrl)
+    .then(function (response) {
+      // request was successful
+      if (response.ok) {
+        response.json().then(function (data) {
+          console.log(data.data[0].images.downsized.url);
+          //return data;
+          //displayQuestion(data);
+        });
+      } else {
+        alert("Giphy API Error: Unable to retreive a GIF");
+      }
+    })
+    .catch(function (error) {
+      // Notice this `.catch()` getting chained onto the end of the `.then()` method
+      alert("Giphy API Error: Unable to connect to giphy database");
+    });
+};
+
 function endGame() {
   // Determine high score
   // get local storage high score, if not there, using 0
   // var highScoreList = localStorage.getItem("triviahighscore");
-  var newHighScore = false;
+  var newHighScore = true;
   if (highScoreList === null) {
     newHighScore = true;
   } else {
@@ -342,9 +344,58 @@ function endGame() {
 
     // update message unique to getting a high score
     var endMessage =
-      "Amazing! You had a perfect score by answering all " +
+      "A new high score of <strong>" +
       score +
-      " questions correctly!";
+      "</strong> correct answers! Congratulations! Please enter a name to remember you by below and join the ranks amongst the greatest trivia master of all time!";
+
+    $("#gameArea").html(
+      "<div id='gameArea' class='column has-text-centered is-10 pb-2'><article class='message is-primary my-5'><div class='message-header'><p class='title is-4 has-text-white'>Game Over!</p></div><div class='message-body is-size-3 has-text-left'>" +
+        endMessage +
+        "</div><div class='field mx-6 my-3'><div class='control has-icons-right'><input id='highScoreInput' class='input is-medium is-primary' type='text' placeholder='By what name shall we remember you by?'/><span class='icon is-small is-left is-primary'><i class='fa-solid fa-person-pinball'></i></span><div id='nameSubmitBtn' class='control my-4'><a class='button is-primary is-medium mb-4'>Etch into Stone</a></div></div></div></article></div>"
+    );
+
+    $("#gameArea").on("click", "#nameSubmitBtn", function () {
+      $("#gameArea").off("click", "#nameSubmitBtn");
+
+        var newEntry = [
+          {
+            name: $("#nameSubmitBtn").val(),
+            score: score,
+          },
+        ];
+
+      if (highScoreList === null) {
+        highScoreList.push() = newEntry;
+
+      } else {
+        for (var i = 0; i < highScoreList.length; i++) {
+          if (score > highScoreList[i].score) {
+            highScoreList.splice(i, 0, newEntry);
+          }
+        }
+        if (highScoreList.length > 10) {
+          highScoreList.length = 10;
+        }
+      }
+
+      // add after submit
+      $(".message").append(
+        "<button class='button is-primary is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button is-primary is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button>"
+      );
+
+      $("#gameArea").on("click", "#returnHome", function () {
+        $("#gameArea").off("click", "#returnHome");
+        $("#gameArea").off("click", "#viewHighScore");
+        console.log("clicked return home");
+        document.location.href = "index.html";
+      });
+      $("#gameArea").on("click", "#viewHighScore", function () {
+        $("#gameArea").off("click", "#viewHighScore");
+        $("#gameArea").off("click", "#returnHome");
+        console.log("clicked View High Score");
+        document.location.href = "high-score.html";
+      });
+    });
   } else {
     // no new high score messages
     // creates end message based on score %
@@ -374,26 +425,25 @@ function endGame() {
         gameQuestionCountLimit +
         " questions correctly. Maybe trivia is not your jam. How about you try again and find out!";
     }
+
+    // clears game area and provides the user a results
+    $("#gameArea").html(
+      "<div id='gameArea' class='column has-text-centered is-10'><article class='message is-primary my-5'><div class='message-header'><p class='title is-4 has-text-white'>Game Over!</p></div><div class='message-body is-size-3 has-text-left'>" +
+        endMessage +
+        "</div><button class='button is-primary is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button is-primary is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button></article></div>"
+    );
+
+    $("#gameArea").on("click", "#returnHome", function () {
+      $("#gameArea").off("click", "#returnHome");
+      $("#gameArea").off("click", "#viewHighScore");
+      console.log("clicked return home");
+      document.location.href = "index.html";
+    });
+    $("#gameArea").on("click", "#viewHighScore", function () {
+      $("#gameArea").off("click", "#viewHighScore");
+      $("#gameArea").off("click", "#returnHome");
+      console.log("clicked View High Score");
+      document.location.href = "high-score.html";
+    });
   }
-
-  // clears game area and provides the user a results
-
-  $("#gameArea").html(
-    "<div id='gameArea' class='column has-text-centered is-10'><article class='message is-primary my-5'><div class='message-header'><p class='title is-4 has-text-white'>Best of Luck!</p></div><div class='message-body is-size-3 has-text-left'>" +
-      endMessage +
-      "</div><button class='button is-primary is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button is-primary is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button></article></div>"
-  );
-
-  $("#gameArea").on("click", "#returnHome", function () {
-    $("#gameArea").off("click", "#returnHome");
-    $("#gameArea").off("click", "#viewHighScore");
-    console.log("clicked return home");
-    document.location.href = "index.html";
-  });
-  $("#gameArea").on("click", "#viewHighScore", function () {
-    $("#gameArea").off("click", "#viewHighScore");
-    $("#gameArea").off("click", "#returnHome");
-    console.log("clicked View High Score");
-    document.location.href = "high-score.html";
-  });
 }
