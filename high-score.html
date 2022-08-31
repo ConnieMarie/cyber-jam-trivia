@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Cyber Jam Trivia-High Score</title>
   </head>
-  <body>
+  <body class="highScorePage">
     <!-- HEADER -->
     <!-- bulma hero -->
     <!-- Hero head: will stick at the top -->
@@ -39,10 +39,7 @@
               <div id="navbarMenuHeroA" class="navbar-menu">
                 <div class="navbar-end">
                   <span class="navbar-item">
-                    <a
-                      class="button is-white "
-                      href="high-score.html"
-                    >
+                    <a class="button is-white" href="high-score.html">
                       <span class="icon">
                         <i class="fa-solid fa-crown"></i>
                       </span>
@@ -60,57 +57,35 @@
 
     <!--  -->
     <main class="section is-medium">
-       <div class="columns is-centered">
-            <table class="table is-hoverable has-text-centered is-6 is-fullwidth">
-              <thead class="has-background-primary-dark has-text-white">
-                <tr>
-                  <th class="has-text-white has-text-centered is-size-4">Place</th>
-                  <th class="has-text-white has-text-centered is-size-4">Player</th>
-                  <th class="has-text-white has-text-centered is-size-4">Score</th>
-                </tr>
-              </thead>
-              <tbody class="has-text-primary-dark is-size-6">
-                <tr>
-                  <td>1st</td>
-                  <td>INTL</td>
-                  <td>00</td>
-                </tr>
-                <tr>
-                  <td>2nd</td>
-                  <td>INTL</td>
-                  <td>00</td>
-                </tr>
-                <tr>
-                  <td>3rd</td>
-                  <td>INTL</td>
-                  <td>00</td>
-                </tr>
-                <tr>
-                  <td>4th</td>
-                  <td>INTL</td>
-                  <td>00</td>
-                </tr>
-                <tr>
-                  <td>5th</td>
-                  <td>INTL</td>
-                  <td>00</td>
-                </tr>
-                <tr>
-                  <td>6th</td>
-                  <td>INTL</td>
-                  <td>00</td>
-                </tr>
-              </tbody>
-            </table>
-       <div class="column is-1"></div>
-       <div class="column is-3 is-vcentered">
-      <button class="button my-5 has-background-primary-dark is-large is-fullwidth has-text-white">Play Again</button>
-      <button class="button my-5 has-background-primary-dark is-large is-fullwidth has-text-white">Close</button>
-       </div>
-       <div class="column is-1"></div>
+      <div class="columns is-centered">
+        <table class="table is-hoverable has-text-centered is-6 is-fullwidth">
+          <thead class="has-background-primary-dark has-text-white">
+            <tr>
+              <th class="has-text-white has-text-centered is-size-4">Place</th>
+              <th class="has-text-white has-text-centered is-size-4">Player</th>
+              <th class="has-text-white has-text-centered is-size-4">Score</th>
+            </tr>
+          </thead>
+          <tbody
+            id="tableListBody"
+            class="has-text-primary-dark is-size-6"
+          ></tbody>
+        </table>
+        <div class="column is-1"></div>
+        <div class="column is-3 is-vcentered">
+          <a
+            class="button my-5 has-background-primary-dark is-large is-fullwidth has-text-white"
+            href="index.html"
+          >
+            Play Again
+          </a>
+        </div>
+        <div class="column is-1"></div>
       </div>
     </main>
-    <footer class="footer m-0 p-5 title is-4 has-text-right has-background-primary-dark has-text-white">
+    <footer
+      class="footer m-0 p-5 title is-4 has-text-right has-background-primary-dark has-text-white"
+    >
       Made with 🤘 by Team <strong class="is-italic">Awesome</strong>
     </footer>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
