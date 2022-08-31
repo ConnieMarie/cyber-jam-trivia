@@ -14,11 +14,11 @@
 .button,
 .btn {
   /* box-shadow: 5px 5px 5px hsl(171, 100%, 29%); */
-  box-shadow: 1px 1px 5px rgba(0, 148, 126, 0.5);
+  box-shadow: 1px 1px 10px rgba(0, 148, 126, 0.5);
 }
 
 .dropdown-menu {
-  margin-left: auto;
+  margin: auto;
 }
 
 /* @media screen and (max-width: 1024px) {

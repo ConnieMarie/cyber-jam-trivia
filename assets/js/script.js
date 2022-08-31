@@ -40,6 +40,13 @@ var highScoreList = [
 
 //runs event listeners specific to the main page
 if ($("body").hasClass("homepage")) {
+  //navbar menu active toggle
+  $("header").on("click", ".navbar-burger", function () {
+    $(".navbar-burger").toggleClass("is-active");
+    $(".navbar-menu").toggleClass("is-active");
+  });
+
+
   //toggles the bulma dropdown button reveal
   var dropdown = document.querySelector(".dropdown");
   dropdown.addEventListener("click", function (event) {
