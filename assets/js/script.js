@@ -1,6 +1,6 @@
 var questionData; //need global for click event
 var score = 0;
-var gameQuestionCountLimit = 1;
+var gameQuestionCountLimit = 3;
 var gameQuestionCount = 0;
 var gameCategoryId = "";
 var giphyApiKey = "IqouWAvchaDj6oy5b7niRntKCW50BpKB";
@@ -225,15 +225,17 @@ function displayQuestion(triviaData) {
     .effect("slide", { direction: "left" }, 400, function () {
       $("#choiceButtons")
         .html(choiceButtonEl)
-        .effect("slide", { direction: "right" }, 800);
+        .effect("slide", { direction: "right" }, 1000);
     });
+
+  // test
 
   $("#gameArea").on("click", ".choiceButton", function () {
     $("#gameArea").off("click", ".choiceButton");
     var chosenAnswer = $(this).text();
-    console.log(chosenAnswer);
-    console.log(questionData.answer);
-    if (chosenAnswer == questionData.answer) {
+    // console.log(chosenAnswer);
+    // console.log(questionData.answer);
+    if (chosenAnswer === questionData.answer) {
       console.log("Correct");
       score++;
       $(this).removeClass("has-background-primary-dark");
@@ -245,8 +247,6 @@ function displayQuestion(triviaData) {
       $(this).addClass("is-danger");
       //provide user response
     }
-
-    // !!!!! still need to disable the answer buttons to prevent multiple clicks until next button is clicked
 
     // add next question button or finish button if last question
     //click event will look for .nextQuestion class and call getQuestion();
