@@ -200,7 +200,7 @@ function displayQuestion(triviaData) {
   var choiceButtonAppender = [];
   for (var i = 0; i < 4; i++) {
     choiceButtonAppender.push(
-      "<button class='button my-5 is-primary is-large is-fullwidth has-text-weight-bold choiceButton'>" +
+      "<button class='button my-5 has-background-primary-dark has-text-white is-large is-fullwidth has-text-weight-bold choiceButton'>" +
         triviaData.choices[i] +
         "</button>"
     );
@@ -216,7 +216,7 @@ function displayQuestion(triviaData) {
   // creates question area elements and slides in from left
   $("#questionArea")
     .html(
-      "<article class='message is-primary my-5'><div class='message-header'><p id='questionTitle' class='title is-4 has-text-white'>Question " +
+      "<article class='message is-primary my-5'><div class='message-header has-background-primary-dark has-text-white'><p id='questionTitle' class='title is-4 has-text-white'>Question " +
         gameQuestionCount +
         "</p></div><div id='questionBody' class='message-body is-size-4 has-text-left'>" +
         triviaData.question +
@@ -236,12 +236,12 @@ function displayQuestion(triviaData) {
     if (chosenAnswer == questionData.answer) {
       console.log("Correct");
       score++;
-      $(this).removeClass("is-primary");
+      $(this).removeClass("has-background-primary-dark");
       $(this).addClass("is-success");
       //provide user response
     } else {
       console.log("Incorrect");
-      $(this).removeClass("is-primary");
+      $(this).removeClass("has-background-primary-dark");
       $(this).addClass("is-danger");
       //provide user response
     }
@@ -257,7 +257,7 @@ function displayQuestion(triviaData) {
     }
 
     $("#questionBody").append(
-      "<div class='has-text-centered mt-6'><button class='button is-primary is-large px-6' id='nextQuestion'>" +
+      "<div class='has-text-centered mt-6'><button class='button has-background-primary-dark has-text-white is-large px-6' id='nextQuestion'>" +
         nextButtonText +
         "</button></div>"
     );
@@ -351,3 +351,4 @@ function endGame() {
 }
 
 // getQuestion();
+next
