@@ -55,6 +55,7 @@ if ($("body").hasClass("homepage")) {
       document.location.href = "game-page.html";
     } else {
       openModal(); 
+      return;
     }
   });
 }
