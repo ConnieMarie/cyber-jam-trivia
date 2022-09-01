@@ -220,7 +220,7 @@ function openModal(modalTitle, modalMessage, modalButtonText) {
       modalTitle +
       "</p></header><section class='modal-card-body is-size-4'><h1></h1><p>" +
       modalMessage +
-      "</p></section><footer class='modal-card-foot'><button class='button has-background-color-primary-dark has-text-black is-large' id='modalButton'>" +
+      "</p></section><footer class='modal-card-foot'><button class='button has-background-primary-dark has-text-white is-large' id='modalButton'>" +
       modalButtonText +
       "</button></footer></div></div>"
   );
