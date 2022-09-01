@@ -1,7 +1,7 @@
 var questionData; //need global for click event
 var score = 0;
 var highScoreList = [];
-var gameQuestionCountLimit = 3;
+var gameQuestionCountLimit = 10;
 var gameQuestionCount = 0;
 var gameCategoryId = "";
 var giphyImgUrl = ""; //function nested and not returning to original call
@@ -310,7 +310,6 @@ var getQuestion = function () {
             // console.log(questionData);
 
             displayQuestion(questionData);
-            
           });
         } else {
           // bulma loading icon class
@@ -338,11 +337,16 @@ function displayQuestion(triviaData) {
         triviaData.choices[i] +
         "</button>"
     );
-    
   }
 
   //add progress bar upon clicking start
-  $("#progressBar").html("<div class='columns'><div class='column is-1'></div><progress class='progress 'value='" + gameQuestionCount + "' max='" + gameQuestionCountLimit + "'></progress><div class='column is-1'></div>")
+  $("#progressBar").html(
+    "<div class='columns'><div class='column is-1'></div><progress class='progress 'value='" +
+      gameQuestionCount +
+      "' max='" +
+      gameQuestionCountLimit +
+      "'></progress><div class='column is-1'></div>"
+  );
 
   // combining array without delimiters into one html string
   var choiceButtonEl = choiceButtonAppender.join("");
@@ -392,8 +396,6 @@ function displayQuestion(triviaData) {
     } else {
       var nextButtonText = "Next";
     }
-
-
 
     $("#questionBody").append(
       "<div class='has-text-centered mt-6'><button class='button has-background-primary-dark has-text-white is-large px-6' id='nextQuestion'>" +
@@ -475,7 +477,7 @@ function endGame() {
   highScoreList = JSON.parse(localStorage.getItem("triviahighscore"));
 
   //if no high score list, user obtained a new high score
-  var newHighScore = true;
+  var newHighScore = false;
   if (highScoreList === null) {
     newHighScore = true;
   } else {
