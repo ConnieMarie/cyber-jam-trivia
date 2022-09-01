@@ -220,7 +220,7 @@ function openModal(modalTitle, modalMessage, modalButtonText) {
       modalTitle +
       "</p></header><section class='modal-card-body is-size-4'><h1></h1><p>" +
       modalMessage +
-      "</p></section><footer class='modal-card-foot'><button class='button is-primary is-large' id='modalButton'>" +
+      "</p></section><footer class='modal-card-foot'><button class='button has-background-color-primary-dark has-text-white is-large' id='modalButton'>" +
       modalButtonText +
       "</button></footer></div></div>"
   );
@@ -310,6 +310,7 @@ var getQuestion = function () {
             // console.log(questionData);
 
             displayQuestion(questionData);
+            
           });
         } else {
           // bulma loading icon class
@@ -333,11 +334,16 @@ function displayQuestion(triviaData) {
   var choiceButtonAppender = [];
   for (var i = 0; i < 4; i++) {
     choiceButtonAppender.push(
-      "<button class='button my-5 has-background-primary-dark has-text-white is-large is-fullwidth has-text-weight-bold choiceButton'>" +
+      "<button class='button my-5 has-background-primary-dark has-text-white is-size-6 is-fullwidth has-text-weight-bold choiceButton'>" +
         triviaData.choices[i] +
         "</button>"
     );
+    
   }
+
+  //add progress bar upon clicking start
+  $("#progressBar").html("<div class='columns'><div class='column is-1'></div><progress class='progress 'value='" + gameQuestionCount + "' max='" + gameQuestionCountLimit + "'></progress><div class='column is-1'></div>")
+
   // combining array without delimiters into one html string
   var choiceButtonEl = choiceButtonAppender.join("");
 
@@ -386,6 +392,8 @@ function displayQuestion(triviaData) {
     } else {
       var nextButtonText = "Next";
     }
+
+
 
     $("#questionBody").append(
       "<div class='has-text-centered mt-6'><button class='button has-background-primary-dark has-text-white is-large px-6' id='nextQuestion'>" +
@@ -490,9 +498,9 @@ function endGame() {
       "</strong> correct answers! Congratulations! Please enter a name to remember you by below and join the ranks amongst the greatest trivia master of all time!";
 
     $("#gameArea").html(
-      "<article class='message is-primary my-5'><div class='message-header'><p class='title is-4 has-text-white'>Game Over!</p></div><div class='message-body is-size-3 has-text-left'>" +
+      "<article class='message my-5'><div class='message-header has-background-primary-dark'><p class='title is-4 has-text-white'>Game Over!</p></div><div class='message-body is-size-3 has-text-left'>" +
         endMessage +
-        "</div class='container'><div id='giphyImgContainer'class='container columns is-centered mx-auto my-0'></div><div class='field mx-6 my-3'><div class='control has-icons-right'><form id='submitForm'><input id='highScoreInput' class='input is-medium is-primary' type='text' placeholder='By what name shall we remember you by?'/><span class='icon is-small is-left is-primary'><i class='fa-solid fa-person-pinball'></i></span><div class='control my-4'><input id='nameSubmitBtn' class='button is-primary is-medium mb-4' type='submit' value='Etch into Stone'></div></div></div></article>"
+        "</div class='container'><div id='giphyImgContainer'class='container columns is-centered mx-auto my-0'></div><div class='field mx-6 my-3'><div class='control has-icons-right'><form id='submitForm'><input id='highScoreInput' class='input is-medium is-primary' type='text' placeholder='By what name shall we remember you by?'/><span class='icon is-small is-left'><i class='fa-solid fa-person-pinball'></i></span><div class='control my-4'><input id='nameSubmitBtn' class='button has-background-primary-dark has-text-white is-medium mb-4' type='submit' value='Etch into Stone'></div></div></div></article>"
     );
 
     // get image and apply only if successful. layout not impacted if unsuccessful.
@@ -538,7 +546,7 @@ function endGame() {
 
       // add after submit
       $(".message").append(
-        "<button class='button is-primary is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button is-primary is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button>"
+        "<button class='button has-background-primary-dark has-text-white is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button has-background-primary-dark has-text-white is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button>"
       );
 
       $("#gameArea").on("click", "#returnHome", function () {
