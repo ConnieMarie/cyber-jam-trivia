@@ -1,6 +1,6 @@
 var questionData; //need global for click event
 var score = 0;
-var highScoreList = {};
+var highScoreList = [];
 var gameQuestionCountLimit = 3;
 var gameQuestionCount = 0;
 var gameCategoryId = "";
@@ -11,19 +11,9 @@ var giphyApiUrl =
   "http://api.giphy.com/v1/gifs/search?q=<searchTerm>&api_key=<giphyApiKey>&limit=20&offset=<randomNum>";
 var triviaApiUrl =
   "https://opentdb.com/api.php?amount=1&category=<catId>&type=multiple";
+var triviaCatListApiUrl = "https://opentdb.com/api_category.php";
 
 // var motivationalApiUrl = "https://nodejs-quoteapp.herokuapp.com/quote"
-
-var gameCategoryList = [
-  {
-    id: 12,
-    name: "Music",
-  },
-  {
-    id: 23,
-    name: "History",
-  },
-];
 
 // dummy high score list
 var highScoreList = [
@@ -83,6 +73,51 @@ $("header").on("click", ".navbar-burger", function () {
 // *** HOME PAGE ***
 //runs event listeners specific to the main page
 if ($("body").hasClass("homepage")) {
+  //populates the dropdown menu with all available trivia
+  var triviaCatListAPI = function () {
+    var fetchUrl = triviaCatListApiUrl;
+    // make a request to the url
+    fetch(fetchUrl)
+      .then(function (response) {
+        // request was successful
+        if (response.ok) {
+          response.json().then(function (data) {
+            console.log(data);
+
+            var catListHtml = "";
+            for (var i = 0; i < data.trivia_categories.length; i++) {
+              catListHtml =
+                catListHtml +
+                "<a class='dropdown-item is-primary is-size-6 is-fullwidth' data-catId='" +
+                data.trivia_categories[i].id +
+                "'>" +
+                data.trivia_categories[i].name.replace("Entertainment: ", "") +
+                "</a>";
+            }
+            console.log(catListHtml);
+            $("#dropdownCatList").html(catListHtml);
+          });
+        } else {
+          var alertTitle = "Oops...";
+          var alertMessage =
+            "The trivia game experienced an error. Please refresh the browser. If the issue persists, try playing again later or contact the owner of this application.";
+          var alertButtonMessage = "Got it!";
+          openModal(alertTitle, alertMessage, alertButtonMessage);
+          console.log("Trivia API Error: Unable to retreive a question");
+        }
+      })
+      .catch(function (error) {
+        var alertTitle = "Oops...";
+        var alertMessage =
+          "The trivia game experienced an error. Please refresh the browser. If the issue persists, try playing again later or contact the owner of this application.";
+        var alertButtonMessage = "Got it!";
+        openModal(alertTitle, alertMessage, alertButtonMessage);
+        console.log("Trivia API Error: Unable to connect to trivia database");
+      });
+  };
+
+  triviaCatListAPI();
+
   //toggles the bulma dropdown button reveal
   var dropdown = document.querySelector(".dropdown");
   dropdown.addEventListener("click", function (event) {
@@ -468,33 +503,35 @@ function endGame() {
       event.preventDefault();
       $("#gameArea").off("click", "#nameSubmitBtn");
 
-      var newEntry = [
-        {
-          name: $("#highScoreInput").val(),
-          score: score,
-          date: Date.now(),
-        },
-      ];
+      var newEntry = {
+        name: $("#highScoreInput").val(),
+        score: score,
+        date: Date.now(),
+      };
 
       $("#highScoreInput").attr("placeholder", newEntry.name);
       $("#highScoreInput").prop("disabled", true);
       $("#nameSubmitBtn").prop("disabled", true);
       console.log(newEntry);
-      console.log(newEntry[0].name);
-      console.log(newEntry[0].score);
-      console.log(newEntry[0].date);
+      console.log(newEntry.name);
+      console.log(newEntry.score);
+      console.log(newEntry.date);
 
       if (highScoreList === null) {
-        highScoreList = newEntry;
+        highScoreList = [newEntry];
+      } else if (highScoreList.length < 10) {
+        highScoreList.push(newEntry);
       } else {
         for (var i = 0; i < highScoreList.length; i++) {
           if (score > highScoreList[i].score) {
+            console.log(score);
+            console.log(highScoreList[i].score);
             highScoreList.splice(i, 0, newEntry);
           }
         }
-        if (highScoreList.length > 10) {
-          highScoreList.length = 10;
-        }
+
+        // limiting array to 10
+        highScoreList.length = 10;
       }
 
       localStorage.setItem("triviahighscore", JSON.stringify(highScoreList));
