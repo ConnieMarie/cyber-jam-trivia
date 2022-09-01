@@ -9,7 +9,8 @@
   color: hsl(171, 100%, 29%);
 }
 
-.button, .btn {
+.button,
+.btn {
   box-shadow: 2px 2px 5px rgb(0, 148, 126);
 }
 
@@ -17,7 +18,16 @@
   margin: auto;
 }
 
-
 .progress::-webkit-progress-value {
-  background-color: #AF125A !important;
+  background-color: #af125a !important;
+}
+
+.dropdown-content {
+  max-height: 13em;
+  overflow: auto;
+}
+
+.image.is-max256w {
+  /* height: 256px; */
+  max-width: 256px;
 }
