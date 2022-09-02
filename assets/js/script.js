@@ -15,6 +15,8 @@ var triviaCatListApiUrl = "https://opentdb.com/api_category.php";
 
 // var motivationalApiUrl = "https://nodejs-quoteapp.herokuapp.com/quote"
 
+// is-primary
+
 // dummy high score list
 var highScoreList = [
   {
@@ -497,7 +499,7 @@ function endGame() {
     var endMessage =
       "A new high score of <strong>" +
       score +
-      "</strong> correct answers! Congratulations! Please enter a name to remember you by below and join the ranks amongst the greatest trivia master of all time!";
+      "</strong> correct answers! Congratulations! Please enter a name to remember you by below and join the ranks amongst the greatest trivia masters of all time!";
 
     $("#gameArea").html(
       "<article class='message my-5'><div class='message-header has-background-primary-dark'><p class='title is-4 has-text-white'>Game Over!</p></div><div class='message-body is-size-3 has-text-left'>" +
@@ -593,9 +595,9 @@ function endGame() {
 
     // clears game area and provides the user a results
     $("#gameArea").html(
-      "<div id='gameArea' class='column has-text-centered is-10'><article class='message is-primary my-5'><div class='message-header'><p class='title is-4 has-text-white'>Game Over!</p></div><div class='message-body is-size-3 has-text-left'>" +
+      "<div id='gameArea' class='column has-text-centered is-10'><article class='message is-primary my-5'><div class='message-header has-background-primary-dark has-text white'><p class='title is-4 has-text-white'>Game Over!</p></div><div class='message-body is-size-3 has-text-left'>" +
         endMessage +
-        "</div><div id='giphyImgContainer'class='container columns is-centered mx-auto my-0'></div><button class='button is-primary is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button is-primary is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button></article></div>"
+        "</div><div id='giphyImgContainer'class='container columns is-centered mx-auto my-0'></div><button class='button has-background-primary-dark has-text-white is-large px-6 mb-5 mx-2' id='returnHome'>Return Home</button><button class='button has-background-primary-dark has-text-white is-large px-6 mx-2 mb-5' id='viewHighScore'>View High Scores</button></article></div>"
     );
 
     giphyFetchImg(imgCategory);
